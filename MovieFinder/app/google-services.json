@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "626889527579",
+    "project_id": "moviefinder-51d59",
+    "storage_bucket": "moviefinder-51d59.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626889527579:android:3733b6d1e4e324ae3ec3be",
+        "android_client_info": {
+          "package_name": "com.mobileapps.moviefinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626889527579-bf1k4oqc5q4tegd4r6i0n2vqtf7tifhb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-G0V4N5jaqvCUi_6OJev66tg_msq3AMs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626889527579-bf1k4oqc5q4tegd4r6i0n2vqtf7tifhb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

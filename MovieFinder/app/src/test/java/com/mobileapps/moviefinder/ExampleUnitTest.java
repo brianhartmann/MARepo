@@ -1,4 +1,4 @@
-package com.example.moviefinder;
+package com.mobileapps.moviefinder;
 
 import org.junit.Test;
 
