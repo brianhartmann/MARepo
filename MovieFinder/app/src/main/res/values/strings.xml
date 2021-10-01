@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MovieFinder</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="pw">Password</string>
+    <string name="confirm_pw">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="create">Create</string>
+    <string name="already_have_account">Already have an account? Login here!</string>
+    <string name="dont_have_account">Don\'t have an account? Register Here!</string>
+    <string name="dashboard">Welcome to the Dashboard</string>
 </resources>
