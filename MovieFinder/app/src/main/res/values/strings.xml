@@ -9,5 +9,6 @@
     <string name="create">Create</string>
     <string name="already_have_account">Already have an account? Login here!</string>
     <string name="dont_have_account">Don\'t have an account? Register Here!</string>
-    <string name="dashboard">Welcome to the Dashboard</string>
+    <string name="dashboard">Welcome to MovieFinder!</string>
+    <string name="find_movie">Find Movie(s)</string>
 </resources>
