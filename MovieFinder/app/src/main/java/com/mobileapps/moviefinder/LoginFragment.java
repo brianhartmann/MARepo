@@ -1,12 +1,15 @@
 package com.mobileapps.moviefinder;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import android.app.Activity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -18,29 +21,38 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Login extends AppCompatActivity {
+
+public class LoginFragment extends Fragment {
+
     EditText mEmail, mPassword;
     Button mLoginBtn;
     TextView mRegisterBtn;
     FirebaseAuth fAuth;
     ProgressBar progressBar;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        mEmail = findViewById(R.id.email);
-        mPassword = findViewById(R.id.password);
-        mLoginBtn = findViewById(R.id.loginBtn);
-        mRegisterBtn = findViewById(R.id.no_account);
+    @Override
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View v;
+        Activity activity = requireActivity();
+        v = inflater.inflate(R.layout.fragment_login, container, false);
+
+        mEmail = v.findViewById(R.id.email);
+        mPassword = v.findViewById(R.id.password);
+        mLoginBtn = v.findViewById(R.id.loginBtn);
+        mRegisterBtn = v.findViewById(R.id.no_account);
 
         fAuth = FirebaseAuth.getInstance();
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = v.findViewById(R.id.progressBar);
 
         if(fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
-            finish();
+            startActivity(new Intent(activity, WelcomeActivity.class));
+            activity.finish();
         }
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
@@ -69,10 +81,12 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(Login.this, "User Logged in", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+
+                            Toast.makeText(getContext(), "User Logged in", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(activity, WelcomeActivity.class));
+                            activity.finish();
                         } else {
-                            Toast.makeText(Login.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                         }
                     }
@@ -84,8 +98,10 @@ public class Login extends AppCompatActivity {
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Register.class));
+                startActivity(new Intent(activity, RegisterActivity.class));
             }
         });
+        return v;
     }
+
 }

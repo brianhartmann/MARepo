@@ -2,20 +2,24 @@ package com.mobileapps.moviefinder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.app.Activity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,8 +29,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+public class RegisterFragment extends Fragment {
 
-public class Register extends AppCompatActivity {
+
     EditText mName, mEmail, mPassword, mPassword2;
     Button mRegisterBtn;
     TextView mLoginBtn;
@@ -37,23 +42,30 @@ public class Register extends AppCompatActivity {
     public static final String TAG = "TAG";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        mName = findViewById(R.id.name);
-        mEmail = findViewById(R.id.email);
-        mPassword = findViewById(R.id.password);
-        mPassword2 = findViewById(R.id.passwordConfirm);
-        mRegisterBtn = findViewById(R.id.registerBtn);
-        mLoginBtn = findViewById(R.id.alreadyRegistered);
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+    }
+
+    @Override
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final Activity activity = requireActivity();
+        View v;
+        v = inflater.inflate(R.layout.fragment_register, container, false);
+        mName = v.findViewById(R.id.name);
+        mEmail = v.findViewById(R.id.email);
+        mPassword = v.findViewById(R.id.password);
+        mPassword2 = v.findViewById(R.id.passwordConfirm);
+        mRegisterBtn = v.findViewById(R.id.registerBtn);
+        mLoginBtn = v.findViewById(R.id.alreadyRegistered);
 
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = v.findViewById(R.id.progressBar);
 
         if(fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
-            finish();
+            startActivity(new Intent(getContext(), WelcomeActivity.class));
+            activity.finish();
         }
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +102,7 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(Register.this, "User Created", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "User Created", Toast.LENGTH_SHORT).show();
                             userID = fAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("users").document(userID);
                             Map<String,Object> user = new HashMap<>();
@@ -99,7 +111,7 @@ public class Register extends AppCompatActivity {
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Log.d(TAG, "onSuccess: user Profile is created for "+ userID);
+                                    Log.d(TAG, "onSuccess: user Profile is created for " + userID);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -107,9 +119,9 @@ public class Register extends AppCompatActivity {
                                     Log.d(TAG, "onFailure: " + e.toString());
                                 }
                             });
-                            startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+                            startActivity(new Intent(activity, WelcomeActivity.class));
                         } else {
-                            Toast.makeText(Register.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             progressBar.setVisibility(View.GONE);
                         }
                     }
@@ -120,8 +132,9 @@ public class Register extends AppCompatActivity {
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Login.class));
+                startActivity(new Intent(activity, LoginActivity.class));
             }
         });
+        return v;
     }
 }

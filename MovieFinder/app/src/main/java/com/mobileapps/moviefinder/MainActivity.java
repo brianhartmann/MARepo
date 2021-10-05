@@ -4,20 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-import androidx.annotation.NonNull;
-
-
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import java.util.*;
-
-import com.google.firebase.firestore.*;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "DocSnippets";
@@ -35,14 +23,14 @@ public class MainActivity extends AppCompatActivity {
         mRegisterPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Register.class));
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             }
         });
 
         mLoginPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Login.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });
 
