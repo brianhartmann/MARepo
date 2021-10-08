@@ -28,7 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/* Modeled after Adam Champions RegisterFragment from his TicTacToe application*/
 public class RegisterFragment extends Fragment {
 
 

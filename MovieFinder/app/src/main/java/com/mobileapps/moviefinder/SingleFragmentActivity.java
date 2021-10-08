@@ -1,5 +1,5 @@
 package com.mobileapps.moviefinder;
-
+/* Code is written by Adam Champion from his TicTacToe application*/
 import android.os.Bundle;
 
 import androidx.annotation.LayoutRes;
