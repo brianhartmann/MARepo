@@ -1,5 +1,6 @@
 package com.mobileapps.moviefinder;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -29,13 +30,16 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
-//        findMoviePageBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(), FindMovie.class));
-//                //need to add a FindMovie activity and xml
-//            }
-//        });
+
+
+
+
+        findMoviePageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), FindMovieActivity.class));
+            }
+        });
 
     }
 }

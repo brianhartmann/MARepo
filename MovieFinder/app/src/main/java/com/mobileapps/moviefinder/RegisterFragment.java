@@ -129,9 +129,11 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("Register", (String) mLoginBtn.getText());
                 startActivity(new Intent(activity, LoginActivity.class));
             }
         });

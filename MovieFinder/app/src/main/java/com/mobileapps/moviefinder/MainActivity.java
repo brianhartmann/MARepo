@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "DocSnippets";
+    private static final String TAG = "MainActivity";
     Button mRegisterPage;
     Button mLoginPage;
 
