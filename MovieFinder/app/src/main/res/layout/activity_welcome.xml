@@ -6,14 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".WelcomeActivity">
 
+    <include layout="@layout/activity_app_bar"/>
+
     <TextView
         android:id="@+id/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="113dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="109dp"
-        android:layout_marginBottom="598dp"
+        android:layout_marginBottom="490dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/app_name"
         android:textColor="@color/black"

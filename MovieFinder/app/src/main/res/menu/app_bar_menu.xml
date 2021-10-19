@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/account"
+        android:icon="@drawable/ic_baseline_person"
+        android:title="Account Info"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/previouslyWatched"
+        android:icon="@drawable/ic_baseline_video_library"
+        android:title="Previously Watched"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/watchLater"
+        android:icon="@drawable/ic_baseline_watch_later_24"
+        android:title="Watch Later"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/about"
+        android:title="About/Settings"
+        app:showAsAction="never" />
+
+</menu>
