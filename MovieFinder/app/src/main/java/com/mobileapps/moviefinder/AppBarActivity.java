@@ -47,7 +47,7 @@ public class AppBarActivity extends AppCompatActivity {
             //startActivity(new Intent(getApplicationContext(), WatchLater.class));
             return true;
         } else if (itemId == R.id.about) {
-            //startActivity(new Intent(getApplicationContext(), AboutSettings.class));
+            startActivity(new Intent(getApplicationContext(), AboutActivity.class));
             return true;
         }
 
