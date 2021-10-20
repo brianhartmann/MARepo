@@ -7,7 +7,9 @@
     android:layout_height="wrap_content"
     tools:context=".FindMovieFragment">
 
-    <include layout="@layout/activity_app_bar"/>
+    <include
+        android:id="@+id/include"
+        layout="@layout/activity_app_bar" />
 
     <TextView
         android:id="@+id/Title"
@@ -50,7 +52,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/searchForMoviesfor"
         android:layout_width="162dp"
         android:layout_height="24dp"
         android:text="Search for Movies for the"
@@ -64,16 +66,17 @@
     <Spinner
         android:id="@+id/specificFilter"
         android:layout_width="282dp"
-        android:layout_height="29dp"
+        android:layout_height="48dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.217"
+        app:layout_constraintHorizontal_bias="0.341"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/searchForMoviesfor"
         app:layout_constraintVertical_bias="0.042" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Category"
@@ -100,21 +103,23 @@
         android:text="Generate"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toStartOf="@+id/editTextNumber"
+        app:layout_constraintHorizontal_bias="0.833"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/specificFilter" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.801" />
 
     <EditText
         android:id="@+id/editTextNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="143dp"
+        android:layout_height="41dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView9"
-        app:layout_constraintHorizontal_bias="0.724"
+        app:layout_constraintHorizontal_bias="0.787"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/specificFilter"
-        app:layout_constraintVertical_bias="0.376" />
+        app:layout_constraintTop_toTopOf="@+id/include"
+        app:layout_constraintVertical_bias="0.718" />
 
     <TextView
         android:id="@+id/textView9"
@@ -122,7 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="168dp"
-        android:text="Movies"
+        android:text="Page(s)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
