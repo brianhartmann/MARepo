@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppBarActivity {
     Button findMoviePageBtn;
     Button logout;
 

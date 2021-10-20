@@ -7,23 +7,28 @@
         android:id="@+id/account"
         android:icon="@drawable/ic_baseline_person"
         android:title="Account Info"
-        app:showAsAction="never" />
+        android:onClick="accountInfoSelected"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/previouslyWatched"
         android:icon="@drawable/ic_baseline_video_library"
         android:title="Previously Watched"
+        android:onClick="previouslyWatchedSelected"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/watchLater"
         android:icon="@drawable/ic_baseline_watch_later_24"
         android:title="Watch Later"
+        android:onClick="watchLaterSelected"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/about"
+        android:icon="@drawable/ic_baseline_info_24"
         android:title="About/Settings"
-        app:showAsAction="never" />
+        android:onClick="aboutSettingsSelected"
+        app:showAsAction="ifRoom" />
 
 </menu>

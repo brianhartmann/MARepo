@@ -13,9 +13,13 @@
         android:theme="@style/Theme.MovieFinder">
         <activity
             android:name=".FindMovieActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.MovieFinder.NoActionBar"/>
         <activity
             android:name=".SingleFragmentActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SingleFragmentAppBarActivity"
             android:exported="true" />
         <activity
             android:name=".RegisterActivity"

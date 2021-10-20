@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 /* Modeled with help from Adam Champion's GameOptionsFragment from his TicTacToe application*/
 
 public class AppBarActivity extends AppCompatActivity {
+    private static final String TAG = "AppBarActivity";
     Toolbar appToolBar;
 
     @Override
@@ -33,24 +35,23 @@ public class AppBarActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int itemId = item.getItemId();
+    public void accountInfoSelected(MenuItem item) {
+        Toast.makeText(this, "Account Info is selected", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(), AccountInfoActivity.class));
+    }
 
-        if (itemId == R.id.account) {
-            startActivity(new Intent(getApplicationContext(), AccountInfoActivity.class));
-            return true;
-        } else if (itemId == R.id.previouslyWatched) {
-           // startActivity(new Intent(getApplicationContext(), PreviouslyWatched.class));
-            return true;
-        } else if (itemId == R.id.watchLater) {
-            //startActivity(new Intent(getApplicationContext(), WatchLater.class));
-            return true;
-        } else if (itemId == R.id.about) {
-            startActivity(new Intent(getApplicationContext(), AboutActivity.class));
-            return true;
-        }
+    public void previouslyWatchedSelected(MenuItem item) {
+        Toast.makeText(this, "Previously Watched is selected", Toast.LENGTH_SHORT).show();
+        //startActivity(new Intent(getApplicationContext(), PreviouslyWatchedActivity.class));
+    }
 
-        return super.onOptionsItemSelected(item);
+    public void watchLaterSelected(MenuItem item) {
+        Toast.makeText(this, "Watch Later is selected", Toast.LENGTH_SHORT).show();
+        //startActivity(new Intent(getApplicationContext(), WatchLaterActivity.class));
+    }
+
+    public void aboutSettingsSelected(MenuItem item) {
+        Toast.makeText(this, "About/Settings is selected", Toast.LENGTH_SHORT).show();
+        //startActivity(new Intent(getApplicationContext(), AboutSettingsActivity.class));
     }
 }
