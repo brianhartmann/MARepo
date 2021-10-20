@@ -52,6 +52,6 @@ public class AppBarActivity extends AppCompatActivity {
 
     public void aboutSettingsSelected(MenuItem item) {
         Toast.makeText(this, "About/Settings is selected", Toast.LENGTH_SHORT).show();
-        //startActivity(new Intent(getApplicationContext(), AboutSettingsActivity.class));
+        startActivity(new Intent(getApplicationContext(), AboutActivity.class));
     }
 }
