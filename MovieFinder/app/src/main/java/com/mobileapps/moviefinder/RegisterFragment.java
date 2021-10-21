@@ -63,11 +63,6 @@ public class RegisterFragment extends Fragment {
         fAuth = FirebaseAuth.getInstance();
         progressBar = v.findViewById(R.id.progressBar);
 
-        if(fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getContext(), WelcomeActivity.class));
-            activity.finish();
-        }
-
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
