@@ -3,9 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Mobile Apps/MARepo/MovieFinder/app/src/main/res/layout/activity_app_bar.xml" value="0.1796875" />
-        <entry key="..\:/Mobile Apps/MARepo/MovieFinder/app/src/main/res/layout/fragment_about.xml" value="0.1796875" />
-        <entry key="..\:/Mobile Apps/MARepo/MovieFinder/app/src/main/res/layout/fragment_account_info.xml" value="0.1796875" />
         <entry key="MovieFinder/app/src/main/res/drawable/ic_launcher_background.xml" value="0.128125" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_account_info.xml" value="0.1" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_fragment.xml" value="0.11197916666666667" />
@@ -14,9 +11,12 @@
         <entry key="MovieFinder/app/src/main/res/layout/activity_register.xml" value="0.17" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_top_app_bar.xml" value="0.22" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_welcome.xml" value="0.21" />
+        <entry key="MovieFinder/app/src/main/res/layout/fragment_about.xml" value="0.11197916666666667" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_account_info.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_find_movie.xml" value="0.22" />
-        <entry key="MovieFinder/app/src/main/res/layout/fragment_login.xml" value="0.11197916666666667" />
+        <entry key="MovieFinder/app/src/main/res/layout/fragment_login.xml" value="0.21" />
+        <entry key="MovieFinder/app/src/main/res/layout/fragment_register.xml" value="0.2265625" />
+        <entry key="MovieFinder/app/src/main/res/layout/fragment_update_account_info.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/menu/top_app_bar.xml" value="0.25" />
       </map>
     </option>

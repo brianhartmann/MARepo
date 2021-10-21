@@ -48,6 +48,14 @@
             android:name=".AccountInfoActivity"
             android:exported="true"
             android:theme="@style/Theme.MovieFinder.NoActionBar"/>
+        <activity
+            android:name=".UpdateAccountInfoActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MovieFinder.NoActionBar"/>
+        <activity
+            android:name=".AboutActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MovieFinder.NoActionBar"/>
     </application>
 
 </manifest>
