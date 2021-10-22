@@ -1,9 +1,6 @@
 package com.mobileapps.moviefinder;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,10 +21,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class UpdateAccountInfoFragment extends Fragment {
-    private EditText updatedEmail, userName;
-    private TextView currentUserEmail;
-    private Button updateEmailBtn;
+public class ResetPasswordFragment extends Fragment {
+    private EditText updatedPassword, updatedPasswordConfirm;
+    private Button resetPasswordBtn;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -38,37 +34,38 @@ public class UpdateAccountInfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v;
         Activity activity = requireActivity();
-        v = inflater.inflate(R.layout.fragment_update_account_info, container, false);
+        v = inflater.inflate(R.layout.fragment_reset_password, container, false);
 
         /* Code was used and modified from Firebase documentation, firebase.google.com, for managing users */
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            String email = user.getEmail();
-            String name = user.getDisplayName();
 
-            // Handle updating a user's email address
-            currentUserEmail = (TextView) v.findViewById(R.id.currentUserEmail);
-            currentUserEmail.setText(email);
+            // Handle resetting/updating a user's password
+            updatedPassword = v.findViewById(R.id.updatedPassword);
+            updatedPasswordConfirm = v.findViewById(R.id.updatedPasswordConfirm);
+            resetPasswordBtn = v.findViewById(R.id.resetPasswordBtn);
 
-            updatedEmail = v.findViewById(R.id.updatedEmail);
-            updateEmailBtn = v.findViewById(R.id.updateEmailBtn);
-
-            updatedEmail.addTextChangedListener(new TextWatcher() {
+            updatedPasswordConfirm.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    updateEmailBtn.setEnabled(false);
+                    resetPasswordBtn.setEnabled(false);
                 }
 
                 @Override
                 public void onTextChanged(CharSequence str, int i, int i1, int i2) {
                     if(str.toString().trim().length() != 0) {
 
-                        if(str.toString().equals(email)) {
-                            updatedEmail.setError("Cannot update email, same as current email.");
+                        if(str.toString().trim().length() < 6) {
+                            updatedPasswordConfirm.setError("Password must be at least 6 characters.");
 
                         } else {
-                            updateEmailBtn.setEnabled(true);
+                            if(str.toString().trim().equals(updatedPassword.getText().toString().trim())) {
+                                resetPasswordBtn.setEnabled(true);
+
+                            } else {
+                                updatedPasswordConfirm.setError("Passwords must match.");
+                            }
                         }
                     }
                 }
@@ -79,20 +76,21 @@ public class UpdateAccountInfoFragment extends Fragment {
                 }
             });
 
-            updateEmailBtn.setOnClickListener(new View.OnClickListener() {
+            resetPasswordBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    user.updateEmail(updatedEmail.getText().toString().trim())
+
+                    user.updatePassword(updatedPasswordConfirm.getText().toString().trim())
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Log.d("UpdateAccountInfo", "User email address updated.");
-                                        Toast.makeText(getContext(), "Email address was updated. ", Toast.LENGTH_LONG).show();
+                                        Log.d("ResetPassword", "User password updated.");
+                                        Toast.makeText(getContext(), "Password was updated. ", Toast.LENGTH_LONG).show();
 
-                                        updatedEmail.setText("");
-                                        updateEmailBtn.setEnabled(false);
-                                        currentUserEmail.setText(user.getEmail());
+                                        updatedPassword.setText(null);
+                                        updatedPasswordConfirm.setText("");
+                                        resetPasswordBtn.setEnabled(false);
 
                                     } else {
                                         Toast.makeText(getContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -101,8 +99,6 @@ public class UpdateAccountInfoFragment extends Fragment {
                             });
                 }
             });
-
-            // Handle updating a user's name (deal with later)
         }
 
         return v;

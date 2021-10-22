@@ -16,7 +16,9 @@
         <entry key="MovieFinder/app/src/main/res/layout/fragment_find_movie.xml" value="0.22" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_login.xml" value="0.21" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_register.xml" value="0.2265625" />
+        <entry key="MovieFinder/app/src/main/res/layout/fragment_reset_password.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_update_account_info.xml" value="0.25" />
+        <entry key="MovieFinder/app/src/main/res/menu/app_bar_menu.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/menu/top_app_bar.xml" value="0.25" />
       </map>
     </option>

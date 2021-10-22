@@ -54,4 +54,9 @@ public class AppBarActivity extends AppCompatActivity {
         Toast.makeText(this, "About/Settings is selected", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), AboutActivity.class));
     }
+
+    public void homeSelected(MenuItem item) {
+        Toast.makeText(this, "Home/Sign Out is selected", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+    }
 }

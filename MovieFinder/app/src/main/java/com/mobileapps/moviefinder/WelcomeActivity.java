@@ -26,11 +26,18 @@ public class WelcomeActivity extends AppBarActivity {
         logout = findViewById(R.id.logoutBtn);
         welcomeText = (TextView) findViewById(R.id.textView2);
 
-        // Welcome the new user with their name
+        // Welcome the new user with their name or email
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String name = user.getDisplayName();
-            welcomeText.setText("Welcome '" + name + "' to MovieFinder!");
+            if(name == null || name.equals("")) {
+                String email = user.getEmail();
+                int i = email.indexOf('@');
+                welcomeText.setText("Welcome '" + email.substring(0, i) + "' to MovieFinder!");
+
+            } else {
+                welcomeText.setText("Welcome '" + name + "' to MovieFinder!");
+            }
         }
 
 

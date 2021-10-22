@@ -53,6 +53,10 @@
             android:exported="true"
             android:theme="@style/Theme.MovieFinder.NoActionBar"/>
         <activity
+            android:name=".ResetPasswordActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MovieFinder.NoActionBar"/>
+        <activity
             android:name=".AboutActivity"
             android:exported="true"
             android:theme="@style/Theme.MovieFinder.NoActionBar"/>

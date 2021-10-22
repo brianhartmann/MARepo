@@ -31,4 +31,10 @@
         android:onClick="aboutSettingsSelected"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/findMovies"
+        android:title="Home/Sign Out"
+        android:onClick="homeSelected"
+        app:showAsAction="never" />
+
 </menu>
