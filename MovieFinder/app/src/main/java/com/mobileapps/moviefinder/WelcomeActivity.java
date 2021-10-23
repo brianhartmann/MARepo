@@ -30,14 +30,8 @@ public class WelcomeActivity extends AppBarActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String name = user.getDisplayName();
-            if(name == null || name.equals("")) {
-                String email = user.getEmail();
-                int i = email.indexOf('@');
-                welcomeText.setText("Welcome '" + email.substring(0, i) + "' to MovieFinder!");
+            welcomeText.setText("Welcome '" + name + "' to MovieFinder!");
 
-            } else {
-                welcomeText.setText("Welcome '" + name + "' to MovieFinder!");
-            }
         }
 
 

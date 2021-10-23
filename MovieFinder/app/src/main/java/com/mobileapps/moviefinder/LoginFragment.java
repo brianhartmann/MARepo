@@ -51,10 +51,6 @@ public class LoginFragment extends Fragment {
         fAuth = FirebaseAuth.getInstance();
         progressBar = v.findViewById(R.id.progressBar);
 
-        if(fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(activity, WelcomeActivity.class));
-            activity.finish();
-        }
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

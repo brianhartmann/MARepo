@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import java.util.*;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,6 +24,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -92,18 +95,34 @@ public class RegisterFragment extends Fragment {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
-
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(name).build();
+                            user.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "User profile updated.");
+                                            }
+                                        }
+                                    });
+
                             Toast.makeText(getContext(), "User Created", Toast.LENGTH_SHORT).show();
                             userID = fAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("users").document(userID);
-                            Map<String,Object> user = new HashMap<>();
-                            user.put("Name",name);
-                            user.put("Email",email);
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            Map<String,Object> userRecord = new HashMap<>();
+                            userRecord.put("Email",email);
+                            userRecord.put("Watch Later", new ArrayList<Integer>());
+                            userRecord.put("Favorites", new ArrayList<Integer>());
+
+                            documentReference.set(userRecord).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d(TAG, "onSuccess: user Profile is created for " + userID);
