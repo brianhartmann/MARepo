@@ -1,9 +1,5 @@
 package com.mobileapps.moviefinder;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,11 +19,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class UpdateAccountInfoFragment extends Fragment {
-    private EditText updatedEmail, userName;
-    private TextView currentUserEmail;
-    private Button updateEmailBtn;
+    private EditText updatedEmail, updatedName;
+    private TextView currentUserEmail, currentUserName;
+    private Button updateEmailBtn, updateNameBtn;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -36,9 +33,7 @@ public class UpdateAccountInfoFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View v;
-        Activity activity = requireActivity();
-        v = inflater.inflate(R.layout.fragment_update_account_info, container, false);
+        View v = inflater.inflate(R.layout.fragment_update_account_info, container, false);
 
         /* Code was used and modified from Firebase documentation, firebase.google.com, for managing users */
 
@@ -102,7 +97,64 @@ public class UpdateAccountInfoFragment extends Fragment {
                 }
             });
 
-            // Handle updating a user's name (deal with later)
+            // Handle updating a user's name
+            currentUserName = (TextView) v.findViewById(R.id.currentUserName);
+            currentUserName.setText(name);
+
+            updatedName = v.findViewById(R.id.updatedName);
+            updateNameBtn = v.findViewById(R.id.updateNameBtn);
+
+            updatedName.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    updateNameBtn.setEnabled(false);
+                }
+
+                @Override
+                public void onTextChanged(CharSequence str, int i, int i1, int i2) {
+                    if(str.toString().trim().length() != 0) {
+
+                        if(str.toString().equals(name)) {
+                            updatedName.setError("Cannot update name, same as current name.");
+
+                        } else {
+                            updateNameBtn.setEnabled(true);
+                        }
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    // Auto-generated method
+                }
+            });
+
+            updateNameBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(updatedName.getText().toString().trim())
+                            .build();
+
+                    user.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("UpdateAccountInfo", "User profile (name) updated.");
+                                        Toast.makeText(getContext(), "Name was updated. ", Toast.LENGTH_LONG).show();
+
+                                        updatedName.setText("");
+                                        updateNameBtn.setEnabled(false);
+                                        currentUserName.setText(user.getDisplayName());
+
+                                    } else {
+                                        Toast.makeText(getContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+            });
         }
 
         return v;
