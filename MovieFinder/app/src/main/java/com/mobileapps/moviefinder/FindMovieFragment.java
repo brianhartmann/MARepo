@@ -42,11 +42,13 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
     Spinner filterCat;
     Spinner filter2;
     Button findMovie;
-    EditText numPages;
+    EditText numPages, numYear;
 
 
     Map<String, Integer> genreMapping = new HashMap<String, Integer>();
-
+    Map<String, Integer> streamerMapping = new HashMap<>();
+    ArrayAdapter<CharSequence> adapter2;
+    ArrayAdapter<CharSequence> adapter3;
 
     public FindMovieFragment() {
         // Required empty public constructor
@@ -69,6 +71,21 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         searchForMovies = v.findViewById(R.id.searchForMoviesfor);
         category = v.findViewById(R.id.category);
         numPages = v.findViewById(R.id.editTextNumber);
+        numYear = v.findViewById(R.id.numberField);
+
+        //maps streaming service to streaming service id for api
+        streamerMapping.put("Netflix", 8);
+        streamerMapping.put("Amazon Prime Video", 9);
+        streamerMapping.put("Disney Plus", 337);
+        streamerMapping.put("Apple iTunes", 2);
+        streamerMapping.put("Google Play Movies", 3);
+        streamerMapping.put("Hulu", 15);
+        streamerMapping.put("Paramount Plus", 531);
+        streamerMapping.put("HBO Max", 384);
+        streamerMapping.put("Peacock", 386);
+        streamerMapping.put("YouTube", 192);
+        streamerMapping.put("Showtime", 37);
+
 
 
         //maps genre to genre id for api
@@ -111,7 +128,7 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         findMovie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String genre = (String) filter2.getSelectedItem();
+                String dropDownSelected = (String) filter2.getSelectedItem();
                 String pages = numPages.getText().toString().trim();
                 if (pages.equals("")){
                     pages="1";
@@ -120,12 +137,27 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
                 if (numPagesInt < 1) {
                     numPagesInt = 1;
                 }
-                String url = String.format("https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=%d&with_genres=%d",
-                        numPagesInt, genreMapping.get(genre));
+
+                String url = "";
+
+                if (filterCat.getSelectedItem().toString().equals("Year")){
+                    url = String.format("https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=%d&primary_release_year=%d",
+                            numPagesInt, Integer.parseInt(numYear.getText().toString()));
+                } else if (filterCat.getSelectedItem().toString().equals("Within certain length")){
+                    url = String.format("https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=%d&with_runtime.lte=%d",
+                            numPagesInt, Integer.parseInt(numYear.getText().toString()));
+                } else if (filterCat.getSelectedItem().toString().equals("Genre")){
+                    url = String.format("https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=%d&with_genres=%d",
+                            numPagesInt, genreMapping.get(dropDownSelected));
+                } else if (filterCat.getSelectedItem().toString().equals("From streaming service")) {
+                    url = String.format("https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=%d&with_watch_providers=%d&watch_region=US",
+                            numPagesInt, streamerMapping.get(dropDownSelected));
+                } else {
+                    System.exit(1);
+                }
 
                 // Formulate the request and handle the response.
-                Log.d("FindMovie", url);
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -137,6 +169,8 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
                                     //Log.d("FindMovie", jsonObject.toString());
                                     for (int i = 0; i < jsonArray.length(); i++){
                                         Log.d("FindMovie", jsonArray.getJSONObject(i).getString("title"));
+                                        //Log.d("FindMovie", jsonArray.getJSONObject(i).getString("provider_name"));
+                                        //Log.d("FindMovie", jsonArray.getJSONObject(i).toString());
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -164,9 +198,16 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filterCat.setAdapter(adapter);
         filterCat.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(), R.array.genre, android.R.layout.simple_spinner_item);
+
+
+        adapter2 = ArrayAdapter.createFromResource(getContext(), R.array.genre, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        filter2.setAdapter(adapter2);
+
+
+        adapter3 = ArrayAdapter.createFromResource(getContext(), R.array.streamingService, android.R.layout.simple_spinner_item);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
         return v;
     }
 
@@ -176,14 +217,29 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         String item;
         item = parent.getItemAtPosition(pos).toString();
 
-        if (!item.equals("Genre")){
-            filter2.setVisibility(View.INVISIBLE);
-            searchForMovies.setVisibility(View.INVISIBLE);
-            category.setVisibility(View.INVISIBLE);
-        } else {
+        if (item.equals("Genre")){
+            numYear.setVisibility(View.INVISIBLE);
             filter2.setVisibility(View.VISIBLE);
             searchForMovies.setVisibility(View.VISIBLE);
             category.setVisibility(View.VISIBLE);
+            filter2.setAdapter(adapter2);
+
+
+        } else if (item.equals("Year") || item.equals("Within certain length")) {
+            numYear.setVisibility(View.VISIBLE);
+            filter2.setVisibility(View.INVISIBLE);
+            searchForMovies.setVisibility(View.VISIBLE);
+            category.setVisibility(View.VISIBLE);
+        } else if (item.equals("From streaming service")){
+            numYear.setVisibility(View.INVISIBLE);
+            filter2.setVisibility(View.VISIBLE);
+            searchForMovies.setVisibility(View.VISIBLE);
+            category.setVisibility(View.VISIBLE);
+            filter2.setAdapter(adapter3);
+        } else {
+            filter2.setVisibility(View.INVISIBLE);
+            searchForMovies.setVisibility(View.INVISIBLE);
+            category.setVisibility(View.INVISIBLE);
         }
     }
 
