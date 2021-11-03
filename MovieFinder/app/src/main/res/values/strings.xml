@@ -15,6 +15,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_out">Sign Out</string>
     <string name="app_info">App Info</string>
+    <string name="previously_watched">Previously Watched</string>
+    <string name="watch_later">Watch Later</string>
     <string-array name="filter_categories">
         <item>Genre</item>
         <item>Year</item>
