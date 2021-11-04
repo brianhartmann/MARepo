@@ -60,6 +60,10 @@
             android:name=".AboutActivity"
             android:exported="true"
             android:theme="@style/Theme.MovieFinder.NoActionBar"/>
+        <activity
+            android:name=".MoviePosterActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MovieFinder.NoActionBar"/>
     </application>
 
 </manifest>

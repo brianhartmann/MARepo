@@ -1,10 +1,12 @@
 package com.mobileapps.moviefinder;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -172,6 +174,13 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
                                         //Log.d("FindMovie", jsonArray.getJSONObject(i).getString("provider_name"));
                                         //Log.d("FindMovie", jsonArray.getJSONObject(i).toString());
                                     }
+
+                                    // Start the Movie Posters generated activity
+                                    Intent i = new Intent(activity, MoviePosterActivity.class);
+                                    i.putExtra("jsonArray", jsonArray.toString());
+                                    Log.d("FindMovie", "Generate Movie Posters, start activity");
+                                    startActivity(i);
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
