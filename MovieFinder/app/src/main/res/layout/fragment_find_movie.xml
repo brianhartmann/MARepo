@@ -145,5 +145,20 @@
         app:layout_constraintTop_toBottomOf="@+id/Title"
         app:layout_constraintVertical_bias="0.449" />
 
+    <EditText
+        android:id="@+id/moviePerson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Brad Pitt"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.412"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Title"
+        app:layout_constraintVertical_bias="0.444" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
