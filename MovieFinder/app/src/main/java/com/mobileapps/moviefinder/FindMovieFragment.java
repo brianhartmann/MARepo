@@ -241,6 +241,7 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
                                 Intent i = new Intent(activity, MoviePosterActivity.class);
                                 i.putExtra("jsonArray", jsonArray.toString());
                                 Log.d("FindMovie", "Generate Movie Posters, start activity");
+                                Toast.makeText(getContext(), "Movie(s) Generated", Toast.LENGTH_LONG).show();
                                 startActivity(i);
                             }
                         } catch (JSONException e) {

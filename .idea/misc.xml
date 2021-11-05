@@ -5,6 +5,7 @@
       <map>
         <entry key="MovieFinder/app/src/main/res/drawable/ic_launcher_background.xml" value="0.128125" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_account_info.xml" value="0.1" />
+        <entry key="MovieFinder/app/src/main/res/layout/activity_app_bar.xml" value="0.10052083333333334" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_fragment.xml" value="0.11197916666666667" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_login.xml" value="0.17" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -19,6 +20,7 @@
         <entry key="MovieFinder/app/src/main/res/layout/fragment_register.xml" value="0.2265625" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_reset_password.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_update_account_info.xml" value="0.25" />
+        <entry key="MovieFinder/app/src/main/res/layout/list_item_gallery.xml" value="0.33" />
         <entry key="MovieFinder/app/src/main/res/menu/app_bar_menu.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/menu/top_app_bar.xml" value="0.25" />
       </map>
