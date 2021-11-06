@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,7 +61,7 @@ public class MoviePosterFragment extends Fragment {
         }
 
         postersRecyclerView = v.findViewById(R.id.postersRecyclerView);
-        postersRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        postersRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         postersRecyclerView.setAdapter(new PosterAdapter(galItems));
 
         return v;
@@ -69,11 +71,17 @@ public class MoviePosterFragment extends Fragment {
     private static class PosterHolder extends RecyclerView.ViewHolder {
         private final TextView mItemTextView;
         private final ImageView posterImageView ;
+        private TextView posterOverview;
+        private LinearLayout extraInfoLayout;
+        private Button showMoreBtn;
 
         public PosterHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_gallery, parent, false));
             mItemTextView = itemView.findViewById(R.id.poster_title);
             posterImageView = itemView.findViewById(R.id.poster);
+            posterOverview = itemView.findViewById(R.id.poster_overview);
+            extraInfoLayout = itemView.findViewById(R.id.extraInfo);
+            showMoreBtn = itemView.findViewById(R.id.expandButton);
         }
     }
 
@@ -95,7 +103,7 @@ public class MoviePosterFragment extends Fragment {
         public void onBindViewHolder(@NonNull PosterHolder holder, int position) {
             GalleryItem galleryItem = mGalleryItems.get(position);
 
-            String imageUrl = "https://image.tmdb.org/t/p/w400" + mGalleryItems.get(position).getUrl();
+            String imageUrl = "https://image.tmdb.org/t/p/w500" + mGalleryItems.get(position).getUrl();
             Picasso.get().load(imageUrl).into(holder.posterImageView);
 
             holder.mItemTextView.setText(mGalleryItems.get(position).getTitle());
@@ -103,6 +111,24 @@ public class MoviePosterFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     // when you click on a poster to get more info ?
+                }
+            });
+
+            holder.showMoreBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(holder.extraInfoLayout.getVisibility() == View.GONE) {
+                        holder.showMoreBtn.setText("Show Less Info");
+
+                        String title = holder.mItemTextView.getText().toString();
+                        holder.posterOverview.setText("Overview: " + galleryItem.getOverview());
+
+                        holder.extraInfoLayout.setVisibility(View.VISIBLE);
+
+                    } else {
+                        holder.showMoreBtn.setText("Show More Info");
+                        holder.extraInfoLayout.setVisibility(View.GONE);
+                    }
                 }
             });
         }

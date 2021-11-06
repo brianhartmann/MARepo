@@ -29,15 +29,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/postersRecyclerView"
-        android:layout_width="370dp"
-        android:layout_height="500dp"
+        android:layout_width="302dp"
+        android:layout_height="503dp"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.322"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/moviePosterTitle"
-        app:layout_constraintVertical_bias="0.47" />
+        app:layout_constraintVertical_bias="0.4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

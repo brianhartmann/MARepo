@@ -1,29 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
+	android:layout_height="wrap_content"
+	android:layout_marginBottom="15dp"
+	android:orientation="vertical"
+	android:layout_gravity="center_horizontal">
 
-	<ImageView
-		android:id="@+id/poster"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" />
-
-
-	<TextView
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/card"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:fontFamily="sans-serif-medium"
-		android:textColor="@color/black"
-		android:textSize="18sp"
-		android:text="Photo Title"
-		android:gravity="center"
-		android:layout_marginTop="16dp"
-		android:layout_marginBottom="16dp"
-		android:layout_marginLeft="8dp"
-		android:layout_marginRight="8dp"
-		android:id="@+id/poster_title" />
+		app:cardCornerRadius="20dp"
+		app:cardElevation="10dp"
+		android:layout_margin="10dp"
+		android:layout_gravity="center_horizontal">
 
-<!-- Modeled after Adam Champion's list_item_gallery view from his TicTacToeNew application -->
+		<LinearLayout
+			android:layout_width="214dp"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/poster_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:layout_marginTop="16dp"
+				android:layout_marginLeft="16dp"
+				android:layout_marginRight="16dp"
+				android:fontFamily="sans-serif-medium"
+				android:text="Photo Title"
+				android:textColor="@color/black"
+				android:textSize="18sp" />
+
+			<ImageView
+				android:id="@+id/poster"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:adjustViewBounds="true" />
+
+
+			<Button
+				android:id="@+id/expandButton"
+				android:layout_width="130dp"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:layout_marginTop="5dp"
+				android:layout_marginBottom="10dp"
+				android:backgroundTint="#171FC6"
+				android:onClick="showMore"
+				android:text="Show More Info"
+				android:textColor="#FFFFFF"
+				android:textSize="10sp"
+				android:textStyle="bold" />
+
+			<LinearLayout
+				android:id="@+id/extraInfo"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:visibility="gone">
+
+				<TextView
+					android:id="@+id/poster_overview"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="8dp"
+					android:layout_marginTop="16dp"
+					android:layout_marginRight="8dp"
+					android:layout_marginBottom="16dp"
+					android:fontFamily="sans-serif-medium"
+					android:gravity="center"
+					android:text="Overview: "
+					android:textColor="@color/black"
+					android:textSize="12sp"
+					android:layout_gravity="fill"/>
+
+			</LinearLayout>
+		</LinearLayout>
+
+
+	</com.google.android.material.card.MaterialCardView>
+	<!-- Modeled after Adam Champion's list_item_gallery view from his TicTacToeNew application -->
 </androidx.appcompat.widget.LinearLayoutCompat>
-
