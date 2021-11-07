@@ -1,6 +1,8 @@
 package com.mobileapps.moviefinder;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +14,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -22,13 +34,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /* RecyclerView/Adapter modeled after Adam Champion's recycler view in PhotoGalleryFragment
     from his TicTacToeNew application */
 
 public class MoviePosterFragment extends Fragment {
     private RecyclerView postersRecyclerView;
+    private Map<String, Object> prevWatchedList = new HashMap<>();
+    private Map<String, Object> watchLaterList = new HashMap<>();
+    private DocumentReference documentReference = null;
+    private Map<String, Object> userRecord = null;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -53,16 +71,49 @@ public class MoviePosterFragment extends Fragment {
                 JSONObject obj = jsonArray.getJSONObject(i);
                 galItems.add(new GalleryItem(obj.getString("title"), obj.getString("id"),
                         obj.getString("poster_path"), obj.getString("overview"),
-                        obj.getString("release_date")));
+                        obj.getString("release_date"), obj.getString("vote_average")));
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        postersRecyclerView = v.findViewById(R.id.postersRecyclerView);
-        postersRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
-        postersRecyclerView.setAdapter(new PosterAdapter(galItems));
+        // Handle getting the current user's previously watched and watch later lists
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            documentReference = FirebaseFirestore.getInstance().
+                    collection("users").document(user.getUid());
+
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d("MoviePoster", "DocumentSnapshot data: " + document.getData());
+                            userRecord = document.getData();
+
+                            prevWatchedList = (Map<String, Object>) userRecord.get("Previously Watched");
+                            watchLaterList = (Map<String, Object>) userRecord.get("Watch Later");
+                            System.out.println("prev " + prevWatchedList);
+                            System.out.println("watch " + watchLaterList);
+
+                            postersRecyclerView = v.findViewById(R.id.postersRecyclerView);
+                            postersRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
+                            postersRecyclerView.setAdapter(new PosterAdapter(galItems, "MoviePoster",
+                                    requireActivity(), prevWatchedList, watchLaterList, documentReference, userRecord));
+                        } else {
+                            Log.d("MoviePoster", "No such document");
+                        }
+                    } else {
+                        Log.d("MoviePoster", "Document ref get failed with ", task.getException());
+                    }
+                }
+            });
+
+        } else {
+            Log.d("MoviePoster", "ERROR: User returned null");
+        }
 
         return v;
     }
@@ -71,31 +122,55 @@ public class MoviePosterFragment extends Fragment {
     private static class PosterHolder extends RecyclerView.ViewHolder {
         private final TextView mItemTextView;
         private final ImageView posterImageView ;
-        private TextView posterOverview;
+        private TextView posterOverview, posterReleaseDate, posterRating;
         private LinearLayout extraInfoLayout;
-        private Button showMoreBtn;
+        private Button showMoreBtn, addPrevWatchedBtn, addWatchLaterBtn, removeFromListBtn;
+        private View addListLayout, removeListLayout;
 
         public PosterHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_gallery, parent, false));
             mItemTextView = itemView.findViewById(R.id.poster_title);
             posterImageView = itemView.findViewById(R.id.poster);
             posterOverview = itemView.findViewById(R.id.poster_overview);
+            posterReleaseDate = itemView.findViewById(R.id.poster_release_date);
+            posterRating = itemView.findViewById(R.id.poster_rating);
+
             extraInfoLayout = itemView.findViewById(R.id.extraInfo);
             showMoreBtn = itemView.findViewById(R.id.expandButton);
+            addPrevWatchedBtn = itemView.findViewById(R.id.addPrevWatchedBtn);
+            addWatchLaterBtn = itemView.findViewById(R.id.addWatchLaterBtn);
+            removeFromListBtn = itemView.findViewById(R.id.removeFromListBtn);
+
+            addListLayout = itemView.findViewById(R.id.addListLayout);
+            removeListLayout = itemView.findViewById(R.id.removeListLayout);
         }
     }
 
-    private class PosterAdapter extends RecyclerView.Adapter<PosterHolder> {
+    public class PosterAdapter extends RecyclerView.Adapter<PosterHolder> {
         private final List<GalleryItem> mGalleryItems;
+        private final String mFragName;
+        private final FragmentActivity mActivity;
+        private final Map<String, Object> mPrevWatchedList;
+        private final Map<String, Object> mWatchLaterList;
+        private DocumentReference mDocumentReference = null;
+        private Map<String, Object> mUserRecord = null;
 
-        public PosterAdapter(List<GalleryItem> galleryItems) {
+        public PosterAdapter(List<GalleryItem> galleryItems, String fragName, FragmentActivity activity, Map<String, Object> prevWatchList,
+                             Map<String, Object> watchLatList, DocumentReference docRef, Map<String, Object> userRec) {
             mGalleryItems = galleryItems;
+            mFragName = fragName;
+            mActivity = activity;
+            mPrevWatchedList = prevWatchList;
+            mWatchLaterList = watchLatList;
+
+            mUserRecord = userRec;
+            mDocumentReference = docRef;
         }
 
         @NonNull
         @Override
         public PosterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = requireActivity().getLayoutInflater();
+            LayoutInflater inflater = mActivity.getLayoutInflater();
             return new PosterHolder(inflater, parent);
         }
 
@@ -107,12 +182,9 @@ public class MoviePosterFragment extends Fragment {
             Picasso.get().load(imageUrl).into(holder.posterImageView);
 
             holder.mItemTextView.setText(mGalleryItems.get(position).getTitle());
-            holder.posterImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // when you click on a poster to get more info ?
-                }
-            });
+            if(watchLaterList.containsKey(galleryItem.getId())) {
+                holder.mItemTextView.setTypeface(null, Typeface.BOLD_ITALIC);
+            }
 
             holder.showMoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,15 +192,138 @@ public class MoviePosterFragment extends Fragment {
                     if(holder.extraInfoLayout.getVisibility() == View.GONE) {
                         holder.showMoreBtn.setText("Show Less Info");
 
-                        String title = holder.mItemTextView.getText().toString();
+                        holder.posterReleaseDate.setText("Release Date: " + galleryItem.getReleaseDate());
+                        holder.posterRating.setText("Average Rating: " + galleryItem.getVoteAverage() + "/10");
                         holder.posterOverview.setText("Overview: " + galleryItem.getOverview());
 
                         holder.extraInfoLayout.setVisibility(View.VISIBLE);
+
+                        // Make different button layouts visible/not visible depending on which fragment is being displayed
+                        if(mFragName.equals("PreviouslyWatched")) {
+                            holder.addListLayout.setVisibility(View.GONE);
+                            holder.removeListLayout.setVisibility(View.VISIBLE);
+
+
+                        } else if (mFragName.equals("WatchLater")) {
+                            holder.addListLayout.setVisibility(View.GONE);
+                            holder.removeListLayout.setVisibility(View.VISIBLE);
+                            holder.removeFromListBtn.setText("Watch Later List");
+
+
+                        } else if (mFragName.equals("MoviePoster")){
+                            //If this movie is on the prev watched or watch later list then disable buttons
+                            if(mPrevWatchedList.containsKey(galleryItem.getId())) {
+                                holder.addPrevWatchedBtn.setEnabled(false);
+                            }
+
+                            if(mWatchLaterList.containsKey(galleryItem.getId())) {
+                                holder.addWatchLaterBtn.setEnabled(false);
+                            }
+
+                        }
 
                     } else {
                         holder.showMoreBtn.setText("Show More Info");
                         holder.extraInfoLayout.setVisibility(View.GONE);
                     }
+                }
+            });
+
+
+
+            // Handle adding the movie, the galItem, to the user's previously watched/watch later lists
+            holder.addPrevWatchedBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mPrevWatchedList.put(galleryItem.getId(), galleryItem);
+                    if(mUserRecord != null) {
+                        mUserRecord.put("Previously Watched", mPrevWatchedList);
+                    }
+
+                    if(mDocumentReference != null) {
+                        mDocumentReference.set(mUserRecord).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("MoviePoster", "onSuccess: Movie was added to prev watched list and updated");
+                            }
+
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("MoviePoster", "onFailure: " + e.toString());
+                            }
+                        });
+                    }
+
+                    holder.addPrevWatchedBtn.setEnabled(false);
+                }
+            });
+
+
+            holder.addWatchLaterBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mWatchLaterList.put(galleryItem.getId(), galleryItem);
+                    if(mUserRecord != null) {
+                        mUserRecord.put("Watch Later", mWatchLaterList);
+                    }
+
+                    if(mDocumentReference != null) {
+                        mDocumentReference.set(mUserRecord).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("MoviePoster", "onSuccess: Movie was added to watch later list and updated");
+                            }
+
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("MoviePoster", "onFailure: " + e.toString());
+                            }
+                        });
+                    }
+
+                    holder.addWatchLaterBtn.setEnabled(false);
+                }
+            });
+
+
+            // Handle removing the movie, the galItem, from the user's previously watched/watch later lists
+            holder.removeFromListBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(mFragName.equals("PreviouslyWatched")) {
+                        mPrevWatchedList.remove(galleryItem.getId());
+
+                        if(mUserRecord != null) {
+                            mUserRecord.put("Previously Watched", mPrevWatchedList);
+                        }
+
+                    } else if(mFragName.equals("WatchLater")) {
+                        mWatchLaterList.remove(galleryItem.getId());
+
+                        if(mUserRecord != null) {
+                            mUserRecord.put("Watch Later", mWatchLaterList);
+                        }
+                    }
+
+
+                    if(mDocumentReference != null) {
+                        mDocumentReference.set(mUserRecord).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("MoviePosterAdapter", "onSuccess: Movie was removed to the list and updated");
+                            }
+
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("MoviePosterAdapter", "onFailure: " + e.toString());
+                            }
+                        });
+                    }
+
+                    holder.removeFromListBtn.setEnabled(false);
                 }
             });
         }

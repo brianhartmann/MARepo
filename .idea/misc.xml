@@ -12,15 +12,18 @@
         <entry key="MovieFinder/app/src/main/res/layout/activity_register.xml" value="0.17" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_top_app_bar.xml" value="0.22" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_welcome.xml" value="0.21" />
+        <entry key="MovieFinder/app/src/main/res/layout/add_to_lists_buttons.xml" value="0.33" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_about.xml" value="0.11197916666666667" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_account_info.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_find_movie.xml" value="0.22" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_login.xml" value="0.21" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_movie_poster.xml" value="0.21" />
+        <entry key="MovieFinder/app/src/main/res/layout/fragment_previously_watched.xml" value="0.33" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_register.xml" value="0.2265625" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_reset_password.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_update_account_info.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/layout/list_item_gallery.xml" value="0.33" />
+        <entry key="MovieFinder/app/src/main/res/layout/remove_from_list_button.xml" value="0.33" />
         <entry key="MovieFinder/app/src/main/res/menu/app_bar_menu.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/menu/top_app_bar.xml" value="0.25" />
       </map>

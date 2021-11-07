@@ -42,12 +42,12 @@ public class AppBarActivity extends AppCompatActivity {
 
     public void previouslyWatchedSelected(MenuItem item) {
         Toast.makeText(this, "Previously Watched is selected", Toast.LENGTH_SHORT).show();
-        //startActivity(new Intent(getApplicationContext(), PreviouslyWatchedActivity.class));
+        startActivity(new Intent(getApplicationContext(), PreviouslyWatchedActivity.class));
     }
 
     public void watchLaterSelected(MenuItem item) {
         Toast.makeText(this, "Watch Later is selected", Toast.LENGTH_SHORT).show();
-        //startActivity(new Intent(getApplicationContext(), WatchLaterActivity.class));
+        startActivity(new Intent(getApplicationContext(), WatchLaterActivity.class));
     }
 
     public void aboutSettingsSelected(MenuItem item) {

@@ -44,16 +44,15 @@
 
 			<Button
 				android:id="@+id/expandButton"
-				android:layout_width="130dp"
+				android:layout_width="140dp"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center"
 				android:layout_marginTop="5dp"
 				android:layout_marginBottom="10dp"
 				android:backgroundTint="#171FC6"
-				android:onClick="showMore"
 				android:text="Show More Info"
 				android:textColor="#FFFFFF"
-				android:textSize="10sp"
+				android:textSize="11sp"
 				android:textStyle="bold" />
 
 			<LinearLayout
@@ -62,6 +61,33 @@
 				android:layout_height="wrap_content"
 				android:orientation="vertical"
 				android:visibility="gone">
+
+				<TextView
+					android:id="@+id/poster_release_date"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="8dp"
+					android:layout_marginTop="16dp"
+					android:layout_marginRight="8dp"
+					android:fontFamily="sans-serif-medium"
+					android:text="Release Date: "
+					android:textColor="@color/black"
+					android:textSize="14sp"
+					android:layout_gravity="fill"/>
+
+				<TextView
+					android:id="@+id/poster_rating"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="8dp"
+					android:layout_marginTop="6dp"
+					android:layout_marginRight="8dp"
+					android:layout_marginBottom="8dp"
+					android:fontFamily="sans-serif-medium"
+					android:text="Average Rating: "
+					android:textColor="@color/black"
+					android:textSize="14sp"
+					android:layout_gravity="fill"/>
 
 				<TextView
 					android:id="@+id/poster_overview"
@@ -75,8 +101,17 @@
 					android:gravity="center"
 					android:text="Overview: "
 					android:textColor="@color/black"
-					android:textSize="12sp"
+					android:textSize="16sp"
 					android:layout_gravity="fill"/>
+
+
+				<include layout="@layout/add_to_lists_buttons"
+					android:visibility="visible"
+					android:id="@+id/addListLayout"/>
+
+				<include layout="@layout/remove_from_list_button"
+					android:visibility="gone"
+					android:id="@+id/removeListLayout"/>
 
 			</LinearLayout>
 		</LinearLayout>

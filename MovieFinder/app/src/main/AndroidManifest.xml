@@ -64,6 +64,14 @@
             android:name=".MoviePosterActivity"
             android:exported="true"
             android:theme="@style/Theme.MovieFinder.NoActionBar"/>
+        <activity
+            android:name=".PreviouslyWatchedActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MovieFinder.NoActionBar"/>
+        <activity
+            android:name=".WatchLaterActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MovieFinder.NoActionBar"/>
     </application>
 
 </manifest>

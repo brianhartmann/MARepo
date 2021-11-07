@@ -119,8 +119,8 @@ public class RegisterFragment extends Fragment {
                             DocumentReference documentReference = fStore.collection("users").document(userID);
                             Map<String,Object> userRecord = new HashMap<>();
                             userRecord.put("Email",email);
-                            userRecord.put("Watch Later", new ArrayList<Integer>());
-                            userRecord.put("Favorites", new ArrayList<Integer>());
+                            userRecord.put("Watch Later", new HashMap<String, Object>());
+                            userRecord.put("Previously Watched", new HashMap<String, Object>());
 
                             documentReference.set(userRecord).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
