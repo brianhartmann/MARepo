@@ -8,6 +8,7 @@ import android.util.FloatMath;
 
 //this class was created with help from a tutorial at
 //https://demonuts.com/android-shake-detection/
+
 public class ShakeDetector implements SensorEventListener {
 
     /*

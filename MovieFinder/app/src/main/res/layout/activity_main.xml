@@ -41,7 +41,7 @@
     <Button
         android:id="@+id/registerPage"
         android:layout_width="250dp"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="16dp"
