@@ -9,6 +9,8 @@ import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.IBinder;
 
+import androidx.fragment.app.Fragment;
+
 // this class was created with the help of a tutorial from Demo Nuts
 // https://demonuts.com/android-shake-detection/
 
@@ -51,6 +53,8 @@ public class ShakeService extends Service implements SensorEventListener {
 
         if (mAccel > 11) {
             // do a random search
+            Intent intent = new Intent(this, FindMovieActivity.class);
+            startActivity(intent);
         }
     }
 
