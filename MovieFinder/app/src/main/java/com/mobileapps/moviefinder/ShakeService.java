@@ -55,6 +55,7 @@ public class ShakeService extends Service implements SensorEventListener {
             // do a random search
             Intent intent = new Intent(this, FindMovieActivity.class);
             startActivity(intent);
+            //still need to search movie on shake
         }
     }
 
