@@ -1,7 +1,12 @@
 package com.mobileapps.moviefinder;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -57,6 +62,11 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
     int currentPage;
     ProgressBar progressBar;
 
+    // The following are used for the shake detection
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
+
     public FindMovieFragment() {
         // Required empty public constructor
     }
@@ -100,6 +110,8 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         genreMapping.put("Thriller", 53);
         genreMapping.put("War", 10752);
         genreMapping.put("Western", 37);
+
+
     }
 
     @Override
@@ -139,6 +151,67 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
 
         //end developer android code ----------------
 
+        // ShakeDetector initialization
+        mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
+            @Override
+            public void onShake(int count) {
+                String dropDownSelected = (String) filter2.getSelectedItem();
+                String pages = numPages.getText().toString().trim();
+                String moviePerson = person.getText().toString().trim();
+
+                //sets page value if incorrect or left empty
+                if (pages.equals("")){
+                    pages="10";
+                }
+                int numPagesInt = Integer.parseInt(pages);
+                if (numPagesInt < 1) {
+                    numPagesInt = 10;
+                }
+                currentPage = 1;
+
+                String url = "";
+                String selectedItem = filterCat.getSelectedItem().toString();
+                if (selectedItem.equals("Year")){
+                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&primary_release_year=%d",
+                            Integer.parseInt(numYear.getText().toString()));
+                } else if (selectedItem.equals("Within certain length")){
+                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_runtime.lte=%d",
+                            Integer.parseInt(numYear.getText().toString()));
+                } else if (selectedItem.equals("Genre")){
+                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_genres=%d",
+                            genreMapping.get(dropDownSelected));
+                } else if (selectedItem.equals("From streaming service")) {
+                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_watch_providers=%d&watch_region=US", streamerMapping.get(dropDownSelected));
+                } else if (selectedItem.equals("With actor/actress")) {
+
+                    //format query to replace spaces with '%20'
+                    String newMoviePerson = "";
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (int i = 0; i < moviePerson.length(); i++){
+                        if (moviePerson.charAt(i) == ' '){
+                            stringBuilder.append("%20");
+                        } else {
+                            stringBuilder.append(moviePerson.charAt(i));
+                        }
+                        newMoviePerson = stringBuilder.toString();
+                    }
+                    url = String.format(Locale.US, "https://api.themoviedb.org/3/search/person?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&query=%s&page=1&include_adult=false",
+                            newMoviePerson);
+                } else {
+                    System.exit(1);
+                }
+
+                progressBar.setVisibility(View.VISIBLE);
+                sendAPIRequest(url, activity, selectedItem, numPagesInt, v);
+
+
+            }
+        });
 
         //click listener for 'search' button
         findMovie.setOnClickListener(new View.OnClickListener() {
@@ -337,7 +410,19 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
             category.setVisibility(View.INVISIBLE);
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the following line to register the Session Manager Listener onResume
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
+    }
 
+    @Override
+    public void onPause() {
+        // Add the following line to unregister the Sensor Manager onPause
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
+    }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
