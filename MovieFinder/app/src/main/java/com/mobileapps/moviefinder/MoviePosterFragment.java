@@ -1,5 +1,6 @@
 package com.mobileapps.moviefinder;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Layout;
@@ -42,11 +43,6 @@ import java.util.Map;
     from his TicTacToeNew application */
 
 public class MoviePosterFragment extends Fragment {
-    private RecyclerView postersRecyclerView;
-    private Map<String, Object> prevWatchedList = new HashMap<>();
-    private Map<String, Object> watchLaterList = new HashMap<>();
-    private DocumentReference documentReference = null;
-    private Map<String, Object> userRecord = null;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -56,7 +52,7 @@ public class MoviePosterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         MoviePosterActivity activity = (MoviePosterActivity) getActivity();
-        View v = inflater.inflate(R.layout.fragment_movie_poster, container, false);
+        View v;
 
         String jsonArr = activity.getFindMovieData();
         List<GalleryItem> galItems = new ArrayList<>();
@@ -78,10 +74,20 @@ public class MoviePosterFragment extends Fragment {
             e.printStackTrace();
         }
 
-        // Handle getting the current user's previously watched and watch later lists
+        v = getDataAndLoadAdapter("MoviePoster", inflater, container, galItems, requireActivity(), "");
+
+        return v;
+    }
+
+
+    public View getDataAndLoadAdapter(String fragmentName, @NonNull LayoutInflater inflater, ViewGroup container,
+                                      List<GalleryItem> galItems, FragmentActivity activity, String populateArr) {
+        View view = inflater.inflate(R.layout.fragment_movie_poster, container, false);
+
+        // Handle getting the current user's previously watched and/or watch later lists
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
-            documentReference = FirebaseFirestore.getInstance().
+            DocumentReference documentReference = FirebaseFirestore.getInstance().
                     collection("users").document(user.getUid());
 
             documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -90,32 +96,57 @@ public class MoviePosterFragment extends Fragment {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            Log.d("MoviePoster", "DocumentSnapshot data: " + document.getData());
-                            userRecord = document.getData();
+                            Log.d(fragmentName, "DocumentSnapshot data: " + document.getData());
+                            Map<String, Object> userRecord = document.getData();
 
-                            prevWatchedList = (Map<String, Object>) userRecord.get("Previously Watched");
-                            watchLaterList = (Map<String, Object>) userRecord.get("Watch Later");
+
+                            Map<String, Object> prevWatchedList = (Map<String, Object>) userRecord.get("Previously Watched");
+                            Map<String, Object> watchLaterList = (Map<String, Object>) userRecord.get("Watch Later");
+
                             System.out.println("prev " + prevWatchedList);
                             System.out.println("watch " + watchLaterList);
 
-                            postersRecyclerView = v.findViewById(R.id.postersRecyclerView);
+                            if(populateArr.equals("PrevWatch")) {
+                                // Populate the gallery items (prev watched movie poster info)
+                                for (Object objItem : prevWatchedList.values()){
+                                    HashMap<String, String> obj = (HashMap<String, String>) objItem;
+                                    galItems.add(new GalleryItem(obj.get("title"), obj.get("id"),
+                                            obj.get("url"), obj.get("overview"),
+                                            obj.get("releaseDate"), obj.get("voteAverage")));
+                                }
+                                // System.out.println(" PrevWatchedGallery " + gallery);
+
+                            } else if(populateArr.equals("WatchLat")) {
+                                // Populate the gallery items (watch later movie poster info)
+                                for (Object objItem : watchLaterList.values()) {
+                                    HashMap<String, String> obj = (HashMap<String, String>) objItem;
+                                    galItems.add(new GalleryItem(obj.get("title"), obj.get("id"),
+                                            obj.get("url"), obj.get("overview"),
+                                            obj.get("releaseDate"), obj.get("voteAverage")));
+                                }
+                                // System.out.println(" WatchLaterGallery " + gallery);
+                            }
+
+                            RecyclerView postersRecyclerView = view.findViewById(R.id.postersRecyclerView);
                             postersRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
-                            postersRecyclerView.setAdapter(new PosterAdapter(galItems, "MoviePoster",
-                                    requireActivity(), prevWatchedList, watchLaterList, documentReference, userRecord));
+                            postersRecyclerView.setAdapter(new PosterAdapter(galItems, fragmentName,
+                                    activity, prevWatchedList, watchLaterList, documentReference, userRecord));
+
+
                         } else {
-                            Log.d("MoviePoster", "No such document");
+                            Log.d(fragmentName, "No such document");
                         }
                     } else {
-                        Log.d("MoviePoster", "Document ref get failed with ", task.getException());
+                        Log.d(fragmentName, "Document ref get failed with ", task.getException());
                     }
                 }
             });
 
         } else {
-            Log.d("MoviePoster", "ERROR: User returned null");
+            Log.d(fragmentName, "ERROR: User returned null");
         }
 
-        return v;
+        return view;
     }
 
 
@@ -181,9 +212,11 @@ public class MoviePosterFragment extends Fragment {
             String imageUrl = "https://image.tmdb.org/t/p/w500" + mGalleryItems.get(position).getUrl();
             Picasso.get().load(imageUrl).into(holder.posterImageView);
 
+            // If movie is on watch later list then highlight title
             holder.mItemTextView.setText(mGalleryItems.get(position).getTitle());
-            if(watchLaterList.containsKey(galleryItem.getId())) {
+            if(mFragName.equals("MoviePoster") && mWatchLaterList.containsKey(galleryItem.getId())) {
                 holder.mItemTextView.setTypeface(null, Typeface.BOLD_ITALIC);
+                holder.mItemTextView.setBackgroundColor(Color.rgb(255, 235, 59));
             }
 
             holder.showMoreBtn.setOnClickListener(new View.OnClickListener() {

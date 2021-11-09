@@ -3,8 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Mobile Apps/MARepo/MovieFinder/app/src/main/res/layout/activity_main.xml" value="0.1796875" />
-        <entry key="..\:/Mobile Apps/MARepo/MovieFinder/app/src/main/res/layout/fragment_login.xml" value="0.1796875" />
         <entry key="MovieFinder/app/src/main/res/drawable/ic_launcher_background.xml" value="0.128125" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_account_info.xml" value="0.1" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_app_bar.xml" value="0.10052083333333334" />
@@ -15,7 +13,7 @@
         <entry key="MovieFinder/app/src/main/res/layout/activity_top_app_bar.xml" value="0.22" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_welcome.xml" value="0.21" />
         <entry key="MovieFinder/app/src/main/res/layout/add_to_lists_buttons.xml" value="0.33" />
-        <entry key="MovieFinder/app/src/main/res/layout/fragment_about.xml" value="0.11197916666666667" />
+        <entry key="MovieFinder/app/src/main/res/layout/fragment_about.xml" value="0.21" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_account_info.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_find_movie.xml" value="0.22" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_login.xml" value="0.21" />
@@ -24,6 +22,7 @@
         <entry key="MovieFinder/app/src/main/res/layout/fragment_register.xml" value="0.2265625" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_reset_password.xml" value="0.25" />
         <entry key="MovieFinder/app/src/main/res/layout/fragment_update_account_info.xml" value="0.25" />
+        <entry key="MovieFinder/app/src/main/res/layout/fragment_watch_later.xml" value="0.1359375" />
         <entry key="MovieFinder/app/src/main/res/layout/list_item_gallery.xml" value="0.33" />
         <entry key="MovieFinder/app/src/main/res/layout/remove_from_list_button.xml" value="0.33" />
         <entry key="MovieFinder/app/src/main/res/menu/app_bar_menu.xml" value="0.25" />
