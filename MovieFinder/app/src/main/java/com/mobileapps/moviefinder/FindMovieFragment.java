@@ -144,6 +144,39 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         currentPage = 0;
         totalNumberOfPages = 0;
 
+        previouslyWatched = new ArrayList<>();
+        DocumentReference documentReference = null;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            documentReference = FirebaseFirestore.getInstance().
+                    collection("users").document(user.getUid());
+
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Map<String, Object> userRecord = document.getData();
+
+                            previouslyWatchedList = (Map<String, Object>) userRecord.get("Previously Watched");
+
+                            // Populate the gallery items (prev watched movie poster info)
+                            for (Object objItem : previouslyWatchedList.values()){
+                                HashMap<String, String> obj = (HashMap<String, String>) objItem;
+                                previouslyWatched.add(Integer.parseInt(obj.get("id")));
+                                Log.d("FindMovie", obj.get("id"));
+                            }
+
+
+                        }
+                    }
+                }
+
+            });
+
+        }
+
 
 
 
@@ -202,38 +235,7 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         adapter3 = ArrayAdapter.createFromResource(getContext(), R.array.streamingService, android.R.layout.simple_spinner_item);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        previouslyWatched = new ArrayList<>();
-        DocumentReference documentReference = null;
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null) {
-            documentReference = FirebaseFirestore.getInstance().
-                    collection("users").document(user.getUid());
 
-            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Map<String, Object> userRecord = document.getData();
-
-                            previouslyWatchedList = (Map<String, Object>) userRecord.get("Previously Watched");
-
-                            // Populate the gallery items (prev watched movie poster info)
-                            for (Object objItem : previouslyWatchedList.values()){
-                                HashMap<String, String> obj = (HashMap<String, String>) objItem;
-                                previouslyWatched.add(Integer.parseInt(obj.get("id")));
-                                Log.d("FindMovie", obj.get("id"));
-                            }
-
-
-                        }
-                    }
-                }
-
-            });
-
-        }
 
         return v;
     }
