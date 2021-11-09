@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">626889527579-bf1k4oqc5q4tegd4r6i0n2vqtf7tifhb.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">626889527579</string>
+    <string name="google_api_key" translatable="false">AIzaSyC-G0V4N5jaqvCUi_6OJev66tg_msq3AMs</string>
+    <string name="google_app_id" translatable="false">1:626889527579:android:3733b6d1e4e324ae3ec3be</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyC-G0V4N5jaqvCUi_6OJev66tg_msq3AMs</string>
+    <string name="google_storage_bucket" translatable="false">moviefinder-51d59.appspot.com</string>
+    <string name="project_id" translatable="false">moviefinder-51d59</string>
+</resources>

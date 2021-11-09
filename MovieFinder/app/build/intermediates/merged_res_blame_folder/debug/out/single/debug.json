@@ -1,0 +1,146 @@
+[
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_activity_fragment.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/activity_fragment.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/build/generated/res/pngs/debug/drawable-anydpi-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_fragment_movie_poster.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/fragment_movie_poster.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/drawable_ic_baseline_video_library.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/drawable/ic_baseline_video_library.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/drawable_ic_baseline_person.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/drawable/ic_baseline_person.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/drawable_ic_launcher_background.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_add_to_lists_buttons.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/add_to_lists_buttons.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_list_item_gallery.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/list_item_gallery.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_activity_main.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_activity_app_bar.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/activity_app_bar.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_fragment_reset_password.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/fragment_reset_password.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_fragment_register.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/fragment_register.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_fragment_watch_later.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/fragment_watch_later.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_fragment_about.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/fragment_about.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_fragment_previously_watched.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/fragment_previously_watched.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_fragment_update_account_info.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/fragment_update_account_info.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/drawable_ic_baseline_info_24.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/drawable/ic_baseline_info_24.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_fragment_find_movie.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/fragment_find_movie.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_activity_welcome.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/activity_welcome.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_fragment_account_info.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/fragment_account_info.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_remove_from_list_button.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/remove_from_list_button.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/drawable_ic_baseline_watch_later_24.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/drawable/ic_baseline_watch_later_24.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/menu_app_bar_menu.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/menu/app_bar_menu.xml"
+    },
+    {
+        "merged": "/Users/brianhartmann/MARepo/MovieFinder/app/build/intermediates/merged_res/debug/layout_fragment_login.xml.flat",
+        "source": "/Users/brianhartmann/MARepo/MovieFinder/app/src/main/res/layout/fragment_login.xml"
+    }
+]

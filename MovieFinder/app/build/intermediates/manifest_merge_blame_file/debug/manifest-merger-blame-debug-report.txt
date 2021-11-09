@@ -1,0 +1,369 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.mobileapps.moviefinder"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+8-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="31" />
+9-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:5:5-67
+11-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:5:22-64
+12
+13    <uses-feature
+13-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:6:5-98
+14        android:name="android.hardware.sensor.accelerometer"
+14-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:6:19-71
+15        android:required="true" />
+15-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:6:72-95
+16
+17    <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+18    <!-- <uses-sdk android:minSdkVersion="14" /> -->
+19    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+19-->[com.google.firebase:firebase-firestore:23.0.3] /Users/brianhartmann/.gradle/caches/transforms-3/4f3e562f9b4a28221cc958170aa1cd8b/transformed/jetified-firebase-firestore-23.0.3/AndroidManifest.xml:13:5-79
+19-->[com.google.firebase:firebase-firestore:23.0.3] /Users/brianhartmann/.gradle/caches/transforms-3/4f3e562f9b4a28221cc958170aa1cd8b/transformed/jetified-firebase-firestore-23.0.3/AndroidManifest.xml:13:22-76
+20    <uses-permission android:name="android.permission.WAKE_LOCK" />
+20-->[com.google.android.gms:play-services-measurement-api:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/a25434cf38fbff7c79d1a1ec4155b746/transformed/jetified-play-services-measurement-api-19.0.1/AndroidManifest.xml:24:5-68
+20-->[com.google.android.gms:play-services-measurement-api:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/a25434cf38fbff7c79d1a1ec4155b746/transformed/jetified-play-services-measurement-api-19.0.1/AndroidManifest.xml:24:22-65
+21    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+21-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:26:5-110
+21-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:26:22-107
+22
+23    <application
+23-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:7:5-75:19
+24        android:allowBackup="true"
+24-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:8:9-35
+25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+25-->[androidx.core:core:1.5.0] /Users/brianhartmann/.gradle/caches/transforms-3/b20d70b14f15690cac145ca1871d3078/transformed/core-1.5.0/AndroidManifest.xml:24:18-86
+26        android:debuggable="true"
+27        android:extractNativeLibs="false"
+28        android:icon="@mipmap/ic_launcher"
+28-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:9:9-43
+29        android:label="@string/app_name"
+29-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:10:9-41
+30        android:roundIcon="@mipmap/ic_launcher_round"
+30-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:11:9-54
+31        android:supportsRtl="true"
+31-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:12:9-35
+32        android:testOnly="true"
+33        android:theme="@style/Theme.MovieFinder" >
+33-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:13:9-49
+34        <activity
+34-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:14:9-17:67
+35            android:name="com.mobileapps.moviefinder.FindMovieActivity"
+35-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:15:13-46
+36            android:exported="true"
+36-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:16:13-36
+37            android:theme="@style/Theme.MovieFinder.NoActionBar" />
+37-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:17:13-65
+38        <activity
+38-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:18:9-20:39
+39            android:name="com.mobileapps.moviefinder.SingleFragmentActivity"
+39-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:19:13-51
+40            android:exported="true" />
+40-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:20:13-36
+41        <activity
+41-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:21:9-23:39
+42            android:name="com.mobileapps.moviefinder.SingleFragmentAppBarActivity"
+42-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:22:13-57
+43            android:exported="true" />
+43-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:23:13-36
+44        <activity
+44-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:24:9-26:39
+45            android:name="com.mobileapps.moviefinder.RegisterActivity"
+45-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:25:13-45
+46            android:exported="true" />
+46-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:26:13-36
+47        <activity
+47-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:27:9-29:39
+48            android:name="com.mobileapps.moviefinder.LoginActivity"
+48-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:28:13-42
+49            android:exported="true" />
+49-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:29:13-36
+50        <activity
+50-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:30:9-38:20
+51            android:name="com.mobileapps.moviefinder.MainActivity"
+51-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:31:13-41
+52            android:exported="true" >
+52-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:32:13-36
+53            <intent-filter>
+53-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:33:13-37:29
+54                <action android:name="android.intent.action.MAIN" />
+54-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:34:17-69
+54-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:34:25-66
+55
+56                <category android:name="android.intent.category.LAUNCHER" />
+56-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:36:17-77
+56-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:36:27-74
+57            </intent-filter>
+58        </activity>
+59        <activity
+59-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:39:9-42:67
+60            android:name="com.mobileapps.moviefinder.WelcomeActivity"
+60-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:40:13-44
+61            android:exported="true"
+61-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:41:13-36
+62            android:theme="@style/Theme.MovieFinder.NoActionBar" />
+62-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:42:13-65
+63        <activity
+63-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:43:9-46:67
+64            android:name="com.mobileapps.moviefinder.AppBarActivity"
+64-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:44:13-43
+65            android:exported="true"
+65-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:45:13-36
+66            android:theme="@style/Theme.MovieFinder.NoActionBar" />
+66-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:46:13-65
+67        <activity
+67-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:47:9-50:67
+68            android:name="com.mobileapps.moviefinder.AccountInfoActivity"
+68-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:48:13-48
+69            android:exported="true"
+69-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:49:13-36
+70            android:theme="@style/Theme.MovieFinder.NoActionBar" />
+70-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:50:13-65
+71        <activity
+71-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:51:9-54:67
+72            android:name="com.mobileapps.moviefinder.UpdateAccountInfoActivity"
+72-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:52:13-54
+73            android:exported="true"
+73-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:53:13-36
+74            android:theme="@style/Theme.MovieFinder.NoActionBar" />
+74-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:54:13-65
+75        <activity
+75-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:55:9-58:67
+76            android:name="com.mobileapps.moviefinder.ResetPasswordActivity"
+76-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:56:13-50
+77            android:exported="true"
+77-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:57:13-36
+78            android:theme="@style/Theme.MovieFinder.NoActionBar" />
+78-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:58:13-65
+79        <activity
+79-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:59:9-62:67
+80            android:name="com.mobileapps.moviefinder.AboutActivity"
+80-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:60:13-42
+81            android:exported="true"
+81-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:61:13-36
+82            android:theme="@style/Theme.MovieFinder.NoActionBar" />
+82-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:62:13-65
+83        <activity
+83-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:63:9-66:67
+84            android:name="com.mobileapps.moviefinder.MoviePosterActivity"
+84-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:64:13-48
+85            android:exported="true"
+85-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:65:13-36
+86            android:theme="@style/Theme.MovieFinder.NoActionBar" />
+86-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:66:13-65
+87        <activity
+87-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:67:9-70:67
+88            android:name="com.mobileapps.moviefinder.PreviouslyWatchedActivity"
+88-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:68:13-54
+89            android:exported="true"
+89-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:69:13-36
+90            android:theme="@style/Theme.MovieFinder.NoActionBar" />
+90-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:70:13-65
+91        <activity
+91-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:71:9-74:67
+92            android:name="com.mobileapps.moviefinder.WatchLaterActivity"
+92-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:72:13-47
+93            android:exported="true"
+93-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:73:13-36
+94            android:theme="@style/Theme.MovieFinder.NoActionBar" />
+94-->/Users/brianhartmann/MARepo/MovieFinder/app/src/main/AndroidManifest.xml:74:13-65
+95
+96        <service
+96-->[com.google.firebase:firebase-firestore:23.0.3] /Users/brianhartmann/.gradle/caches/transforms-3/4f3e562f9b4a28221cc958170aa1cd8b/transformed/jetified-firebase-firestore-23.0.3/AndroidManifest.xml:17:9-23:19
+97            android:name="com.google.firebase.components.ComponentDiscoveryService"
+97-->[com.google.firebase:firebase-firestore:23.0.3] /Users/brianhartmann/.gradle/caches/transforms-3/4f3e562f9b4a28221cc958170aa1cd8b/transformed/jetified-firebase-firestore-23.0.3/AndroidManifest.xml:18:13-84
+98            android:directBootAware="true"
+98-->[com.google.firebase:firebase-common:20.0.0] /Users/brianhartmann/.gradle/caches/transforms-3/f618723480d3ae26c45b83bc1f544dd5/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:35:13-43
+99            android:exported="false" >
+99-->[com.google.firebase:firebase-firestore:23.0.3] /Users/brianhartmann/.gradle/caches/transforms-3/4f3e562f9b4a28221cc958170aa1cd8b/transformed/jetified-firebase-firestore-23.0.3/AndroidManifest.xml:19:13-37
+100            <meta-data
+100-->[com.google.firebase:firebase-firestore:23.0.3] /Users/brianhartmann/.gradle/caches/transforms-3/4f3e562f9b4a28221cc958170aa1cd8b/transformed/jetified-firebase-firestore-23.0.3/AndroidManifest.xml:20:13-22:85
+101                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+101-->[com.google.firebase:firebase-firestore:23.0.3] /Users/brianhartmann/.gradle/caches/transforms-3/4f3e562f9b4a28221cc958170aa1cd8b/transformed/jetified-firebase-firestore-23.0.3/AndroidManifest.xml:21:17-111
+102                android:value="com.google.firebase.components.ComponentRegistrar" />
+102-->[com.google.firebase:firebase-firestore:23.0.3] /Users/brianhartmann/.gradle/caches/transforms-3/4f3e562f9b4a28221cc958170aa1cd8b/transformed/jetified-firebase-firestore-23.0.3/AndroidManifest.xml:22:17-82
+103            <meta-data
+103-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:77:13-79:85
+104                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+104-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:78:17-109
+105                android:value="com.google.firebase.components.ComponentRegistrar" />
+105-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:79:17-82
+106            <meta-data
+106-->[com.google.android.gms:play-services-measurement-api:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/a25434cf38fbff7c79d1a1ec4155b746/transformed/jetified-play-services-measurement-api-19.0.1/AndroidManifest.xml:30:13-32:85
+107                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+107-->[com.google.android.gms:play-services-measurement-api:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/a25434cf38fbff7c79d1a1ec4155b746/transformed/jetified-play-services-measurement-api-19.0.1/AndroidManifest.xml:31:17-139
+108                android:value="com.google.firebase.components.ComponentRegistrar" />
+108-->[com.google.android.gms:play-services-measurement-api:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/a25434cf38fbff7c79d1a1ec4155b746/transformed/jetified-play-services-measurement-api-19.0.1/AndroidManifest.xml:32:17-82
+109            <meta-data
+109-->[com.google.firebase:firebase-installations:17.0.0] /Users/brianhartmann/.gradle/caches/transforms-3/26915e951eed1a8e2db1c9f8dff29eb4/transformed/jetified-firebase-installations-17.0.0/AndroidManifest.xml:18:13-20:85
+110                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+110-->[com.google.firebase:firebase-installations:17.0.0] /Users/brianhartmann/.gradle/caches/transforms-3/26915e951eed1a8e2db1c9f8dff29eb4/transformed/jetified-firebase-installations-17.0.0/AndroidManifest.xml:19:17-127
+111                android:value="com.google.firebase.components.ComponentRegistrar" />
+111-->[com.google.firebase:firebase-installations:17.0.0] /Users/brianhartmann/.gradle/caches/transforms-3/26915e951eed1a8e2db1c9f8dff29eb4/transformed/jetified-firebase-installations-17.0.0/AndroidManifest.xml:20:17-82
+112        </service>
+113
+114        <activity
+114-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:27:9-44:20
+115            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+115-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:28:13-80
+116            android:excludeFromRecents="true"
+116-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:29:13-46
+117            android:exported="true"
+117-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:30:13-36
+118            android:launchMode="singleTask"
+118-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:31:13-44
+119            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+119-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:32:13-72
+120            <intent-filter>
+120-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:33:13-43:29
+121                <action android:name="android.intent.action.VIEW" />
+121-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:34:17-69
+121-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:34:25-66
+122
+123                <category android:name="android.intent.category.DEFAULT" />
+123-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:17-76
+123-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:27-73
+124                <category android:name="android.intent.category.BROWSABLE" />
+124-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:37:17-78
+124-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:37:27-75
+125
+126                <data
+126-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:39:17-42:51
+127                    android:host="firebase.auth"
+127-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:40:21-49
+128                    android:path="/"
+128-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:41:21-37
+129                    android:scheme="genericidp" />
+129-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:42:21-48
+130            </intent-filter>
+131        </activity>
+132        <activity
+132-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:45:9-62:20
+133            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+133-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:46:13-79
+134            android:excludeFromRecents="true"
+134-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:47:13-46
+135            android:exported="true"
+135-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:48:13-36
+136            android:launchMode="singleTask"
+136-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:49:13-44
+137            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+137-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:50:13-72
+138            <intent-filter>
+138-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:51:13-61:29
+139                <action android:name="android.intent.action.VIEW" />
+139-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:34:17-69
+139-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:34:25-66
+140
+141                <category android:name="android.intent.category.DEFAULT" />
+141-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:17-76
+141-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:27-73
+142                <category android:name="android.intent.category.BROWSABLE" />
+142-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:37:17-78
+142-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:37:27-75
+143
+144                <data
+144-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:39:17-42:51
+145                    android:host="firebase.auth"
+145-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:40:21-49
+146                    android:path="/"
+146-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:41:21-37
+147                    android:scheme="recaptcha" />
+147-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:42:21-48
+148            </intent-filter>
+149        </activity>
+150
+151        <service
+151-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:64:9-73:19
+152            android:name="com.google.firebase.auth.api.fallback.service.FirebaseAuthFallbackService"
+152-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:65:13-101
+153            android:enabled="true"
+153-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:66:13-35
+154            android:exported="false" >
+154-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:67:13-37
+155            <intent-filter>
+155-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:68:13-72:29
+156                <action android:name="com.google.firebase.auth.api.gms.service.START" />
+156-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:69:17-89
+156-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:69:25-86
+157
+158                <category android:name="android.intent.category.DEFAULT" />
+158-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:17-76
+158-->[com.google.firebase:firebase-auth:21.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/959f288c9642ddb64ff8e14545fb67dd/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:27-73
+159            </intent-filter>
+160        </service>
+161
+162        <provider
+162-->[com.squareup.picasso:picasso:2.71828] /Users/brianhartmann/.gradle/caches/transforms-3/80b5bc3185d6b03ab59cce5b2363107b/transformed/jetified-picasso-2.71828/AndroidManifest.xml:8:9-11:40
+163            android:name="com.squareup.picasso.PicassoProvider"
+163-->[com.squareup.picasso:picasso:2.71828] /Users/brianhartmann/.gradle/caches/transforms-3/80b5bc3185d6b03ab59cce5b2363107b/transformed/jetified-picasso-2.71828/AndroidManifest.xml:9:13-64
+164            android:authorities="com.mobileapps.moviefinder.com.squareup.picasso"
+164-->[com.squareup.picasso:picasso:2.71828] /Users/brianhartmann/.gradle/caches/transforms-3/80b5bc3185d6b03ab59cce5b2363107b/transformed/jetified-picasso-2.71828/AndroidManifest.xml:10:13-72
+165            android:exported="false" />
+165-->[com.squareup.picasso:picasso:2.71828] /Users/brianhartmann/.gradle/caches/transforms-3/80b5bc3185d6b03ab59cce5b2363107b/transformed/jetified-picasso-2.71828/AndroidManifest.xml:11:13-37
+166        <provider
+166-->[com.google.firebase:firebase-common:20.0.0] /Users/brianhartmann/.gradle/caches/transforms-3/f618723480d3ae26c45b83bc1f544dd5/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:26:9-31:39
+167            android:name="com.google.firebase.provider.FirebaseInitProvider"
+167-->[com.google.firebase:firebase-common:20.0.0] /Users/brianhartmann/.gradle/caches/transforms-3/f618723480d3ae26c45b83bc1f544dd5/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:27:13-77
+168            android:authorities="com.mobileapps.moviefinder.firebaseinitprovider"
+168-->[com.google.firebase:firebase-common:20.0.0] /Users/brianhartmann/.gradle/caches/transforms-3/f618723480d3ae26c45b83bc1f544dd5/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:28:13-72
+169            android:directBootAware="true"
+169-->[com.google.firebase:firebase-common:20.0.0] /Users/brianhartmann/.gradle/caches/transforms-3/f618723480d3ae26c45b83bc1f544dd5/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:29:13-43
+170            android:exported="false"
+170-->[com.google.firebase:firebase-common:20.0.0] /Users/brianhartmann/.gradle/caches/transforms-3/f618723480d3ae26c45b83bc1f544dd5/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:30:13-37
+171            android:initOrder="100" />
+171-->[com.google.firebase:firebase-common:20.0.0] /Users/brianhartmann/.gradle/caches/transforms-3/f618723480d3ae26c45b83bc1f544dd5/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:31:13-36
+172
+173        <activity
+173-->[com.google.android.gms:play-services-base:17.1.0] /Users/brianhartmann/.gradle/caches/transforms-3/c5ad7676ef4a81714767033df9c5638c/transformed/jetified-play-services-base-17.1.0/AndroidManifest.xml:23:9-26:75
+174            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+174-->[com.google.android.gms:play-services-base:17.1.0] /Users/brianhartmann/.gradle/caches/transforms-3/c5ad7676ef4a81714767033df9c5638c/transformed/jetified-play-services-base-17.1.0/AndroidManifest.xml:24:13-79
+175            android:exported="false"
+175-->[com.google.android.gms:play-services-base:17.1.0] /Users/brianhartmann/.gradle/caches/transforms-3/c5ad7676ef4a81714767033df9c5638c/transformed/jetified-play-services-base-17.1.0/AndroidManifest.xml:25:13-37
+176            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+176-->[com.google.android.gms:play-services-base:17.1.0] /Users/brianhartmann/.gradle/caches/transforms-3/c5ad7676ef4a81714767033df9c5638c/transformed/jetified-play-services-base-17.1.0/AndroidManifest.xml:26:13-72
+177
+178        <receiver
+178-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:29:9-33:20
+179            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+179-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:30:13-85
+180            android:enabled="true"
+180-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:31:13-35
+181            android:exported="false" >
+181-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:32:13-37
+182        </receiver>
+183
+184        <service
+184-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:35:9-38:40
+185            android:name="com.google.android.gms.measurement.AppMeasurementService"
+185-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:36:13-84
+186            android:enabled="true"
+186-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:37:13-35
+187            android:exported="false" />
+187-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:38:13-37
+188        <service
+188-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:39:9-43:72
+189            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+189-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:40:13-87
+190            android:enabled="true"
+190-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:41:13-35
+191            android:exported="false"
+191-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:42:13-37
+192            android:permission="android.permission.BIND_JOB_SERVICE" />
+192-->[com.google.android.gms:play-services-measurement:19.0.1] /Users/brianhartmann/.gradle/caches/transforms-3/1af3e12a15fc9954d6d8b87069fa45f0/transformed/jetified-play-services-measurement-19.0.1/AndroidManifest.xml:43:13-69
+193
+194        <meta-data
+194-->[com.google.android.gms:play-services-basement:17.1.0] /Users/brianhartmann/.gradle/caches/transforms-3/f40d2a08a355d250ec336f9cb211375c/transformed/jetified-play-services-basement-17.1.0/AndroidManifest.xml:23:9-25:69
+195            android:name="com.google.android.gms.version"
+195-->[com.google.android.gms:play-services-basement:17.1.0] /Users/brianhartmann/.gradle/caches/transforms-3/f40d2a08a355d250ec336f9cb211375c/transformed/jetified-play-services-basement-17.1.0/AndroidManifest.xml:24:13-58
+196            android:value="@integer/google_play_services_version" />
+196-->[com.google.android.gms:play-services-basement:17.1.0] /Users/brianhartmann/.gradle/caches/transforms-3/f40d2a08a355d250ec336f9cb211375c/transformed/jetified-play-services-basement-17.1.0/AndroidManifest.xml:25:13-66
+197    </application>
+198
+199</manifest>

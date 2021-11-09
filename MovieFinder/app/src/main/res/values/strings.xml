@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">MovieFinder</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="name">Name</string>
+    <string name="movies">Movies</string>
+    <string name="minutes">Minutes</string>
+    <string name="email">Email</string>
+    <string name="pw">Password</string>
+    <string name="confirm_pw">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="create">Create</string>
+    <string name="already_have_account">Already have an account? Login here!</string>
+    <string name="dont_have_account">Don\'t have an account? Register Here!</string>
+    <string name="dashboard">Welcome to MovieFinder!</string>
+    <string name="find_movie">Find Movie(s)</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="app_info">App Info</string>
+    <string name="previously_watched">Previously Watched</string>
+    <string name="watch_later">Watch Later</string>
+    <string-array name="filter_categories">
+        <item>Genre</item>
+        <item>Year</item>
+        <item>Within certain length</item>
+        <item>With actor/actress</item>
+        <item>From streaming service</item>
+    </string-array>
+    <string-array name="genre">
+        <item>Action</item>
+        <item>Adventure</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Documentary</item>
+        <item>Drama</item>
+        <item>Family</item>
+        <item>Fantasy</item>
+        <item>History</item>
+        <item>Horror</item>
+        <item>Music</item>
+        <item>Mystery</item>
+        <item>Romance</item>
+        <item>Science Fiction</item>
+        <item>Thriller</item>
+        <item>Western</item>
+    </string-array>
+    <string-array name="streamingService">
+        <item>Netflix</item>
+        <item>Amazon Prime Video</item>
+        <item>Disney Plus</item>
+        <item>Apple iTunes</item>
+        <item>Google Play Movies</item>
+        <item>Hulu</item>
+        <item>Paramount Plus</item>
+        <item>HBO Max</item>
+        <item>Peacock</item>
+        <item>YouTube</item>
+        <item>Showtime</item>
+    </string-array>
+</resources>
