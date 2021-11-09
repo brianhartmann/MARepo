@@ -12,6 +12,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,11 +38,19 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 //https://api.themoviedb.org/3/movie/550?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US
 
@@ -52,6 +62,8 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
     Button findMovie;
     EditText numPages, numYear, person;
     RequestQueue requestQueue;
+    Map<String, Object> previouslyWatchedList;
+    List<Integer> previouslyWatched;
 
 
     Map<String, Integer> genreMapping = new HashMap<String, Integer>();
@@ -160,111 +172,17 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
 
             @Override
             public void onShake(int count) {
-                String dropDownSelected = (String) filter2.getSelectedItem();
-                String pages = numPages.getText().toString().trim();
-                String moviePerson = person.getText().toString().trim();
-
-                //sets page value if incorrect or left empty
-                if (pages.equals("")){
-                    pages="10";
-                }
-                int numPagesInt = Integer.parseInt(pages);
-                if (numPagesInt < 1) {
-                    numPagesInt = 10;
-                }
-                currentPage = 1;
-
-                String url = "";
-                String selectedItem = filterCat.getSelectedItem().toString();
-                if (selectedItem.equals("Year")){
-                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&primary_release_year=%d",
-                            Integer.parseInt(numYear.getText().toString()));
-                } else if (selectedItem.equals("Within certain length")){
-                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_runtime.lte=%d",
-                            Integer.parseInt(numYear.getText().toString()));
-                } else if (selectedItem.equals("Genre")){
-                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_genres=%d",
-                            genreMapping.get(dropDownSelected));
-                } else if (selectedItem.equals("From streaming service")) {
-                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_watch_providers=%d&watch_region=US", streamerMapping.get(dropDownSelected));
-                } else if (selectedItem.equals("With actor/actress")) {
-
-                    //format query to replace spaces with '%20'
-                    String newMoviePerson = "";
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (int i = 0; i < moviePerson.length(); i++){
-                        if (moviePerson.charAt(i) == ' '){
-                            stringBuilder.append("%20");
-                        } else {
-                            stringBuilder.append(moviePerson.charAt(i));
-                        }
-                        newMoviePerson = stringBuilder.toString();
-                    }
-                    url = String.format(Locale.US, "https://api.themoviedb.org/3/search/person?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&query=%s&page=1&include_adult=false",
-                            newMoviePerson);
-                } else {
-                    System.exit(1);
-                }
-
-                progressBar.setVisibility(View.VISIBLE);
-                sendAPIRequest(url, activity, selectedItem, numPagesInt, v);
-
-
+                generateMovies(activity);
             }
         });
+
+
 
         //click listener for 'search' button
         findMovie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String dropDownSelected = (String) filter2.getSelectedItem();
-                String pages = numPages.getText().toString().trim();
-                String moviePerson = person.getText().toString().trim();
-
-                //sets page value if incorrect or left empty
-                if (pages.equals("")){
-                    pages="10";
-                }
-                int numPagesInt = Integer.parseInt(pages);
-                if (numPagesInt < 1) {
-                    numPagesInt = 10;
-                }
-                currentPage = 1;
-
-                String url = "";
-                String selectedItem = filterCat.getSelectedItem().toString();
-                if (selectedItem.equals("Year")){
-                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&primary_release_year=%d",
-                            Integer.parseInt(numYear.getText().toString()));
-                } else if (selectedItem.equals("Within certain length")){
-                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_runtime.lte=%d",
-                            Integer.parseInt(numYear.getText().toString()));
-                } else if (selectedItem.equals("Genre")){
-                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_genres=%d",
-                            genreMapping.get(dropDownSelected));
-                } else if (selectedItem.equals("From streaming service")) {
-                    url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_watch_providers=%d&watch_region=US", streamerMapping.get(dropDownSelected));
-                } else if (selectedItem.equals("With actor/actress")) {
-
-                    //format query to replace spaces with '%20'
-                    String newMoviePerson = "";
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (int i = 0; i < moviePerson.length(); i++){
-                        if (moviePerson.charAt(i) == ' '){
-                            stringBuilder.append("%20");
-                        } else {
-                            stringBuilder.append(moviePerson.charAt(i));
-                        }
-                        newMoviePerson = stringBuilder.toString();
-                    }
-                    url = String.format(Locale.US, "https://api.themoviedb.org/3/search/person?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&query=%s&page=1&include_adult=false",
-                            newMoviePerson);
-                } else {
-                    System.exit(1);
-                }
-
-                progressBar.setVisibility(View.VISIBLE);
-                sendAPIRequest(url, activity, selectedItem, numPagesInt, view);
+                generateMovies(activity);
             }
         });
 
@@ -284,11 +202,97 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         adapter3 = ArrayAdapter.createFromResource(getContext(), R.array.streamingService, android.R.layout.simple_spinner_item);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        previouslyWatched = new ArrayList<>();
+        DocumentReference documentReference = null;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            documentReference = FirebaseFirestore.getInstance().
+                    collection("users").document(user.getUid());
+
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Map<String, Object> userRecord = document.getData();
+
+                            previouslyWatchedList = (Map<String, Object>) userRecord.get("Previously Watched");
+
+                            // Populate the gallery items (prev watched movie poster info)
+                            for (Object objItem : previouslyWatchedList.values()){
+                                HashMap<String, String> obj = (HashMap<String, String>) objItem;
+                                previouslyWatched.add(Integer.parseInt(obj.get("id")));
+                                Log.d("FindMovie", obj.get("id"));
+                            }
+
+
+                        }
+                    }
+                }
+
+            });
+
+        }
+
         return v;
     }
 
+
+    public void generateMovies(Activity activity){
+        String dropDownSelected = (String) filter2.getSelectedItem();
+        String pages = numPages.getText().toString().trim();
+        String moviePerson = person.getText().toString().trim();
+
+        //sets page value if incorrect or left empty
+        if (pages.equals("")){
+            pages="9";
+        }
+        int numPagesInt = Integer.parseInt(pages);
+        if (numPagesInt < 1) {
+            numPagesInt = 9;
+        }
+        currentPage = 1;
+
+        String url = "";
+        String selectedItem = filterCat.getSelectedItem().toString();
+        if (selectedItem.equals("Year")){
+            url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&primary_release_year=%d",
+                    Integer.parseInt(numYear.getText().toString()));
+        } else if (selectedItem.equals("Within certain length")){
+            url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_runtime.lte=%d",
+                    Integer.parseInt(numYear.getText().toString()));
+        } else if (selectedItem.equals("Genre")){
+            url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_genres=%d",
+                    genreMapping.get(dropDownSelected));
+        } else if (selectedItem.equals("From streaming service")) {
+            url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_watch_providers=%d&watch_region=US", streamerMapping.get(dropDownSelected));
+        } else if (selectedItem.equals("With actor/actress")) {
+
+            //format query to replace spaces with '%20'
+            String newMoviePerson = "";
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < moviePerson.length(); i++){
+                if (moviePerson.charAt(i) == ' '){
+                    stringBuilder.append("%20");
+                } else {
+                    stringBuilder.append(moviePerson.charAt(i));
+                }
+                newMoviePerson = stringBuilder.toString();
+            }
+            url = String.format(Locale.US, "https://api.themoviedb.org/3/search/person?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&query=%s&page=1&include_adult=false",
+                    newMoviePerson);
+        } else {
+            System.exit(1);
+        }
+
+        progressBar.setVisibility(View.VISIBLE);
+        sendAPIRequest(url, activity, selectedItem, numPagesInt);
+
+    }
+
     //sends request to api (structure of api request gotten from android developer guide)
-    public void sendAPIRequest(String url, Activity activity, String request, int numberOfMovies, View view){
+    public void sendAPIRequest(String url, Activity activity, String request, int numberOfMovies){
         // Formulate the request and handle the response.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -296,6 +300,7 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
                     public void onResponse(String response) {
                         JSONObject obj = null;
                         try {
+
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray jsonArray = new JSONArray();
 
@@ -303,15 +308,14 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
                             if (request.equals("With actor/actress")){
                                 if (jsonObject.getJSONArray("results").length() == 0){
                                     Log.d("FindMovie", "Here");
-                                    //Toast.makeText(getContext(), "Error: No actor/actress with that name", Toast.LENGTH_LONG).show();
-                                    Toast.makeText(view.getContext(), "Error: No actor/actress with that name", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "No actor/actress with that name", Toast.LENGTH_SHORT).show();
 
                                     progressBar.setVisibility(View.INVISIBLE);
                                 } else {
                                     String id = jsonObject.getJSONArray("results").getJSONObject(0).getString("id");
                                     String url = String.format("https://api.themoviedb.org/3/person/%s/movie_credits?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US",
                                             id);
-                                    sendAPIRequest(url, activity, "credits", numberOfMovies, view);
+                                    sendAPIRequest(url, activity, "credits", numberOfMovies);
                                 }
 
 
@@ -327,22 +331,40 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
 
                                 }
 
-                                JSONArray newJsonArray = new JSONArray();
-                                //requesting less than 20
-                                if (numberOfMovies < jsonArray.length()) {
-                                    for (int i = 0; i < numberOfMovies; i++) {
-                                        newJsonArray.put(i, jsonArray.get(i));
+                                //dont display if no results
+                                if (jsonArray.length() == 0){
+                                    Toast.makeText(getContext(), "No actor/actress with that name", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    int count = 0;
+                                    JSONArray newJsonArray = new JSONArray();
+                                    for (int i = 0; i < jsonArray.length(); i++){
+                                        if (i > numberOfMovies) {
+                                            break;
+                                        } else if (previouslyWatched.contains(Integer.parseInt(jsonArray.getJSONObject(i).getString("id")))){
+                                            Log.d("FindMovie", jsonArray.getJSONObject(i).toString());
+                                        } else {
+
+                                            Log.d("FindMovie", String.valueOf(i));
+
+                                            newJsonArray.put(count, jsonArray.getJSONObject(i));
+                                            count++;
+                                        }
                                     }
                                     jsonArray = newJsonArray;
-                                }
+                                    Log.d("FindMovie newjson:", String.valueOf(jsonArray.length()));
+                                    Log.d("FindMovie json:", String.valueOf(jsonArray.length()));
 
-                                progressBar.setVisibility(View.GONE);
-                                // Start the Movie Posters generated activity
-                                Intent i = new Intent(activity, MoviePosterActivity.class);
-                                i.putExtra("jsonArray", jsonArray.toString());
-                                Log.d("FindMovie", "Generate Movie Posters, start activity");
-                                Toast.makeText(getContext(), "Movie(s) Generated", Toast.LENGTH_LONG).show();
-                                startActivity(i);
+                                    //20 issue
+
+                                    progressBar.setVisibility(View.GONE);
+                                    // Start the Movie Posters generated activity
+                                    Intent i = new Intent(activity, MoviePosterActivity.class);
+                                    i.putExtra("jsonArray", newJsonArray.toString());
+                                    Log.d("FindMovie", "Generate Movie Posters, start activity");
+                                    Toast.makeText(getContext(), "Movie(s) Generated", Toast.LENGTH_LONG).show();
+                                    startActivity(i);
+
+                                }
 
                             }
                         } catch (JSONException e) {

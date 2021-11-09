@@ -65,7 +65,7 @@ public class PreviouslyWatchedFragment extends MoviePosterFragment {
                             userRecord = document.getData();
 
                             previouslyWatchedList = (Map<String, Object>) userRecord.get("Previously Watched");
-                            List<GalleryItem> gallery = new ArrayList<>();
+                            List<GalleryItem> gallery = new ArrayList<GalleryItem>();
 
                             // Populate the gallery items (prev watched movie poster info)
                             for (Object objItem : previouslyWatchedList.values()){
