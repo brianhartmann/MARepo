@@ -1,20 +1,11 @@
 package com.mobileapps.moviefinder;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,18 +19,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.Cache;
 import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -49,10 +39,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
-//https://api.themoviedb.org/3/movie/550?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class FindMovieFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     TextView searchForMovies;
@@ -66,12 +58,10 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
     List<Integer> previouslyWatched;
 
 
-    Map<String, Integer> genreMapping = new HashMap<String, Integer>();
+    Map<String, Integer> genreMapping = new HashMap<>();
     Map<String, Integer> streamerMapping = new HashMap<>();
     ArrayAdapter<CharSequence> adapter2;
     ArrayAdapter<CharSequence> adapter3;
-    int totalNumberOfPages;
-    int currentPage;
     ProgressBar progressBar;
 
     // The following are used for the shake detection
@@ -101,7 +91,6 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         streamerMapping.put("Showtime", 37);
 
 
-
         //maps genre to genre id for api
         genreMapping.put("Action", 28);
         genreMapping.put("Adventure", 12);
@@ -122,18 +111,15 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         genreMapping.put("Thriller", 53);
         genreMapping.put("War", 10752);
         genreMapping.put("Western", 37);
-
-
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v;
-
         Activity activity = requireActivity();
         v = inflater.inflate(R.layout.fragment_find_movie, container, false);
-        filterCat = (Spinner) v.findViewById(R.id.filterCategory);
-        filter2 = (Spinner) v.findViewById(R.id.specificFilter);
+        filterCat = v.findViewById(R.id.filterCategory);
+        filter2 = v.findViewById(R.id.specificFilter);
         findMovie = v.findViewById(R.id.button);
         searchForMovies = v.findViewById(R.id.searchForMoviesfor);
         category = v.findViewById(R.id.category);
@@ -141,44 +127,34 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         numYear = v.findViewById(R.id.numberField);
         person = v.findViewById(R.id.moviePerson);
         progressBar = v.findViewById(R.id.buffering);
-        currentPage = 0;
-        totalNumberOfPages = 0;
 
         previouslyWatched = new ArrayList<>();
-        DocumentReference documentReference = null;
+        DocumentReference documentReference;
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
             documentReference = FirebaseFirestore.getInstance().
                     collection("users").document(user.getUid());
 
-            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Map<String, Object> userRecord = document.getData();
+            documentReference.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map<String, Object> userRecord = document.getData();
 
-                            previouslyWatchedList = (Map<String, Object>) userRecord.get("Previously Watched");
+                        previouslyWatchedList = (Map<String, Object>) userRecord.get("Previously Watched");
 
-                            // Populate the gallery items (prev watched movie poster info)
-                            for (Object objItem : previouslyWatchedList.values()){
-                                HashMap<String, String> obj = (HashMap<String, String>) objItem;
-                                previouslyWatched.add(Integer.parseInt(obj.get("id")));
-                                Log.d("FindMovie", obj.get("id"));
-                            }
-
-
+                        // Populate the gallery items (prev watched movie poster info)
+                        for (Object objItem : previouslyWatchedList.values()){
+                            HashMap<String, String> obj = (HashMap<String, String>) objItem;
+                            previouslyWatched.add(Integer.parseInt(obj.get("id")));
                         }
+
+
                     }
                 }
-
             });
 
         }
-
-
-
 
         //Following code was from developer android guide----------------
 
@@ -201,25 +177,10 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         mAccelerometer = mSensorManager
                 .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mShakeDetector = new ShakeDetector();
-        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
-
-            @Override
-            public void onShake(int count) {
-                generateMovies(activity);
-            }
-        });
-
-
+        mShakeDetector.setOnShakeListener(count -> generateMovies(activity));
 
         //click listener for 'search' button
-        findMovie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                generateMovies(activity);
-            }
-        });
-
-
+        findMovie.setOnClickListener(view -> generateMovies(activity));
 
         //drop down for initial search criteria
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.filter_categories, android.R.layout.simple_spinner_item);
@@ -235,8 +196,6 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         adapter3 = ArrayAdapter.createFromResource(getContext(), R.array.streamingService, android.R.layout.simple_spinner_item);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-
-
         return v;
     }
 
@@ -248,44 +207,49 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
 
         //sets page value if incorrect or left empty
         if (pages.equals("")){
-            pages="9";
+            pages="6";
         }
         int numPagesInt = Integer.parseInt(pages);
         if (numPagesInt < 1) {
-            numPagesInt = 9;
+            numPagesInt = 6;
         }
-        currentPage = 1;
 
         String url = "";
         String selectedItem = filterCat.getSelectedItem().toString();
-        if (selectedItem.equals("Year")){
-            url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&primary_release_year=%d",
-                    Integer.parseInt(numYear.getText().toString()));
-        } else if (selectedItem.equals("Within certain length")){
-            url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_runtime.lte=%d",
-                    Integer.parseInt(numYear.getText().toString()));
-        } else if (selectedItem.equals("Genre")){
-            url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_genres=%d",
-                    genreMapping.get(dropDownSelected));
-        } else if (selectedItem.equals("From streaming service")) {
-            url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_watch_providers=%d&watch_region=US", streamerMapping.get(dropDownSelected));
-        } else if (selectedItem.equals("With actor/actress")) {
+        switch (selectedItem) {
+            case "Year":
+                url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&primary_release_year=%d",
+                        Integer.parseInt(numYear.getText().toString()));
+                break;
+            case "Within certain length":
+                url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_runtime.lte=%d",
+                        Integer.parseInt(numYear.getText().toString()));
+                break;
+            case "Genre":
+                url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_genres=%d",
+                        genreMapping.get(dropDownSelected));
+                break;
+            case "From streaming service":
+                url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_watch_providers=%d&watch_region=US", streamerMapping.get(dropDownSelected));
+                break;
+            case "With actor/actress":
 
-            //format query to replace spaces with '%20'
-            String newMoviePerson = "";
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < moviePerson.length(); i++){
-                if (moviePerson.charAt(i) == ' '){
-                    stringBuilder.append("%20");
-                } else {
-                    stringBuilder.append(moviePerson.charAt(i));
+                //format query to replace spaces with '%20'
+                String newMoviePerson = "";
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < moviePerson.length(); i++) {
+                    if (moviePerson.charAt(i) == ' ') {
+                        stringBuilder.append("%20");
+                    } else {
+                        stringBuilder.append(moviePerson.charAt(i));
+                    }
+                    newMoviePerson = stringBuilder.toString();
                 }
-                newMoviePerson = stringBuilder.toString();
-            }
-            url = String.format(Locale.US, "https://api.themoviedb.org/3/search/person?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&query=%s&page=1&include_adult=false",
-                    newMoviePerson);
-        } else {
-            System.exit(1);
+                url = String.format(Locale.US, "https://api.themoviedb.org/3/search/person?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&query=%s&page=1&include_adult=false",
+                        newMoviePerson);
+                break;
+            default:
+                System.exit(1);
         }
 
         progressBar.setVisibility(View.VISIBLE);
@@ -297,93 +261,75 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
     public void sendAPIRequest(String url, Activity activity, String request, int numberOfMovies){
         // Formulate the request and handle the response.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        JSONObject obj = null;
-                        try {
+                response -> {
+                    try {
 
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray jsonArray = new JSONArray();
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = new JSONArray();
 
-                            //gets most popular actor/actress results and searches again for their movies
-                            if (request.equals("With actor/actress")){
-                                if (jsonObject.getJSONArray("results").length() == 0){
-                                    Log.d("FindMovie", "Here");
-                                    Toast.makeText(getContext(), "No actor/actress with that name", Toast.LENGTH_SHORT).show();
+                        //gets most popular actor/actress results and searches again for their movies
+                        if (request.equals("With actor/actress")){
+                            if (jsonObject.getJSONArray("results").length() == 0){
+                                Toast.makeText(getContext(), "No actor/actress with that name", Toast.LENGTH_SHORT).show();
 
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                } else {
-                                    String id = jsonObject.getJSONArray("results").getJSONObject(0).getString("id");
-                                    String url = String.format("https://api.themoviedb.org/3/person/%s/movie_credits?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US",
-                                            id);
-                                    sendAPIRequest(url, activity, "credits", numberOfMovies);
-                                }
-
-
-
+                                progressBar.setVisibility(View.INVISIBLE);
                             } else {
-                                //for parsing movies from actor/actress
-                                if (request.equals("credits")){
-                                    jsonArray = jsonObject.getJSONArray("cast");
-                                } else {    //for parsing other categories
-                                    currentPage = Integer.parseInt(jsonObject.getString("page"));
-                                    totalNumberOfPages = Integer.parseInt(jsonObject.getString("total_pages"));
-                                    jsonArray = jsonObject.getJSONArray("results");
+                                String id = jsonObject.getJSONArray("results").getJSONObject(0).getString("id");
+                                String url1 = String.format("https://api.themoviedb.org/3/person/%s/movie_credits?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US",
+                                        id);
+                                sendAPIRequest(url1, activity, "credits", numberOfMovies);
+                            }
 
-                                }
 
-                                //dont display if no results
-                                if (jsonArray.length() == 0){
-                                    Toast.makeText(getContext(), "No actor/actress with that name", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    int count = 0;
-                                    JSONArray newJsonArray = new JSONArray();
-                                    for (int i = 0; i < jsonArray.length(); i++){
-                                        if (i > numberOfMovies) {
-                                            break;
-                                        } else if (previouslyWatched.contains(Integer.parseInt(jsonArray.getJSONObject(i).getString("id")))){
-                                            Log.d("FindMovie", jsonArray.getJSONObject(i).toString());
-                                        } else {
 
-                                            Log.d("FindMovie", String.valueOf(i));
-
-                                            newJsonArray.put(count, jsonArray.getJSONObject(i));
-                                            count++;
-                                        }
-                                    }
-                                    jsonArray = newJsonArray;
-                                    Log.d("FindMovie newjson:", String.valueOf(jsonArray.length()));
-                                    Log.d("FindMovie json:", String.valueOf(jsonArray.length()));
-
-                                    //20 issue
-
-                                    progressBar.setVisibility(View.GONE);
-                                    // Start the Movie Posters generated activity
-                                    Intent i = new Intent(activity, MoviePosterActivity.class);
-                                    i.putExtra("jsonArray", newJsonArray.toString());
-                                    Log.d("FindMovie", "Generate Movie Posters, start activity");
-                                    Toast.makeText(getContext(), "Movie(s) Generated", Toast.LENGTH_LONG).show();
-                                    startActivity(i);
-
-                                }
+                        } else {
+                            //for parsing movies from actor/actress
+                            if (request.equals("credits")){
+                                jsonArray = jsonObject.getJSONArray("cast");
+                            } else {    //for parsing other categories
+                                jsonArray = jsonObject.getJSONArray("results");
 
                             }
-                        } catch (JSONException e) {
-                            Log.d("FindMovie", e.toString());
-                        }
 
+                            //dont display if no results
+                            if (jsonArray.length() == 0){
+                                Toast.makeText(getContext(), "No actor/actress with that name", Toast.LENGTH_SHORT).show();
+                            } else {
+                                int count = 0;
+                                JSONArray newJsonArray = new JSONArray();
+                                for (int i = 0; i < jsonArray.length(); i++){
+                                    if (newJsonArray.length() >= numberOfMovies) {
+                                        break;
+                                    } else if (!previouslyWatched.contains(Integer.parseInt(jsonArray.getJSONObject(i).getString("id")))){
+                                        newJsonArray.put(count, jsonArray.getJSONObject(i));
+                                        count++;
+                                    }
+                                }
+
+                                progressBar.setVisibility(View.GONE);
+                                goToResultsScreen(activity, newJsonArray);
+                            }
+
+                        }
+                    } catch (JSONException e) {
+                        Log.d("FindMovie", e.toString());
                     }
+
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("FindMovieFragment", "Fail");
-                    }
-                });
+                error -> Log.d("FindMovieFragment", "Failed API Request"));
 
         // Add the request to the RequestQueue.
         requestQueue.add(stringRequest);
+    }
+
+    //starts results screen
+    public void goToResultsScreen(Activity activity, JSONArray results){
+        // Start the Movie Posters generated activity
+        Intent i = new Intent(activity, MoviePosterActivity.class);
+        i.putExtra("jsonArray", results.toString());
+        Log.d("FindMovie", "Generate Movie Posters, start activity");
+        Toast.makeText(getContext(), "Movie(s) Generated", Toast.LENGTH_LONG).show();
+        startActivity(i);
     }
 
     //sets UI depending on which search category is selected
@@ -393,45 +339,52 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         String item;
         item = parent.getItemAtPosition(pos).toString();
 
-        if (item.equals("Genre")){
-            numYear.setVisibility(View.INVISIBLE);
-            filter2.setVisibility(View.VISIBLE);
-            searchForMovies.setVisibility(View.VISIBLE);
-            category.setVisibility(View.VISIBLE);
-            filter2.setAdapter(adapter2);
-            person.setVisibility(View.INVISIBLE);
-            category.setText("Movies");
-        } else if (item.equals("Year") || item.equals("Within certain length")) {
-            numYear.setVisibility(View.VISIBLE);
-            filter2.setVisibility(View.INVISIBLE);
-            searchForMovies.setVisibility(View.VISIBLE);
-            category.setVisibility(View.VISIBLE);
-            person.setVisibility(View.INVISIBLE);
-            if (item.equals("Year")){
-                category.setText("Movies");
-            } else {
-                category.setText("Minutes");
-            }
-        } else if (item.equals("From streaming service")){
-            numYear.setVisibility(View.INVISIBLE);
-            filter2.setVisibility(View.VISIBLE);
-            searchForMovies.setVisibility(View.VISIBLE);
-            category.setVisibility(View.VISIBLE);
-            filter2.setAdapter(adapter3);
-            person.setVisibility(View.INVISIBLE);
-            category.setText("Movies");
-        } else if (item.equals("With actor/actress")){
-            numYear.setVisibility(View.INVISIBLE);
-            filter2.setVisibility(View.INVISIBLE);
-            searchForMovies.setVisibility(View.VISIBLE);
-            category.setVisibility(View.VISIBLE);
-            filter2.setAdapter(adapter2);
-            person.setVisibility(View.VISIBLE);
-            category.setText("Movies");
-        } else {
-            filter2.setVisibility(View.INVISIBLE);
-            searchForMovies.setVisibility(View.INVISIBLE);
-            category.setVisibility(View.INVISIBLE);
+        switch (item) {
+            case "Genre":
+                numYear.setVisibility(View.INVISIBLE);
+                filter2.setVisibility(View.VISIBLE);
+                searchForMovies.setVisibility(View.VISIBLE);
+                category.setVisibility(View.VISIBLE);
+                filter2.setAdapter(adapter2);
+                person.setVisibility(View.INVISIBLE);
+                category.setText(R.string.movies);
+                break;
+            case "Year":
+            case "Within certain length":
+                numYear.setVisibility(View.VISIBLE);
+                filter2.setVisibility(View.INVISIBLE);
+                searchForMovies.setVisibility(View.VISIBLE);
+                category.setVisibility(View.VISIBLE);
+                person.setVisibility(View.INVISIBLE);
+                if (item.equals("Year")) {
+                    category.setText(R.string.movies);
+                } else {
+                    category.setText(R.string.minutes);
+                }
+                break;
+            case "From streaming service":
+                numYear.setVisibility(View.INVISIBLE);
+                filter2.setVisibility(View.VISIBLE);
+                searchForMovies.setVisibility(View.VISIBLE);
+                category.setVisibility(View.VISIBLE);
+                filter2.setAdapter(adapter3);
+                person.setVisibility(View.INVISIBLE);
+                category.setText(R.string.movies);
+                break;
+            case "With actor/actress":
+                numYear.setVisibility(View.INVISIBLE);
+                filter2.setVisibility(View.INVISIBLE);
+                searchForMovies.setVisibility(View.VISIBLE);
+                category.setVisibility(View.VISIBLE);
+                filter2.setAdapter(adapter2);
+                person.setVisibility(View.VISIBLE);
+                category.setText(R.string.movies);
+                break;
+            default:
+                filter2.setVisibility(View.INVISIBLE);
+                searchForMovies.setVisibility(View.INVISIBLE);
+                category.setVisibility(View.INVISIBLE);
+                break;
         }
     }
     @Override

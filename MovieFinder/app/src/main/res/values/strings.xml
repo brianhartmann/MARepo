@@ -17,6 +17,8 @@
     <string name="app_info">App Info</string>
     <string name="previously_watched">Previously Watched</string>
     <string name="watch_later">Watch Later</string>
+    <string name="movies">Movies</string>
+    <string name="minutes">Minutes</string>
     <string-array name="filter_categories">
         <item>Genre</item>
         <item>Year</item>

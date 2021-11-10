@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -278,6 +279,7 @@ public class MoviePosterFragment extends Fragment {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("MoviePoster", "onSuccess: Movie was added to prev watched list and updated");
+                                Toast.makeText(getContext(), "Added to previously watched", Toast.LENGTH_SHORT).show();
                             }
 
                         }).addOnFailureListener(new OnFailureListener() {
@@ -306,6 +308,7 @@ public class MoviePosterFragment extends Fragment {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("MoviePoster", "onSuccess: Movie was added to watch later list and updated");
+                                Toast.makeText(getContext(), "Added to watch later", Toast.LENGTH_SHORT).show();
                             }
 
                         }).addOnFailureListener(new OnFailureListener() {
