@@ -238,15 +238,31 @@ public class MoviePosterFragment extends Fragment {
                 holder.mItemTextView.setBackgroundColor(Color.rgb(255, 255, 255));
             }
 
+            holder.posterReleaseDate.setText("Release Date: " + galleryItem.getReleaseDate());
+            holder.posterRating.setText("Average Rating: " + galleryItem.getVoteAverage() + "/10");
+            holder.posterOverview.setText("Overview: " + galleryItem.getOverview());
+
+            holder.showMoreBtn.setText("Show More Info");
+            holder.extraInfoLayout.setVisibility(View.GONE);
+            if(mFragName.equals("WatchLater") || mFragName.equals("PreviouslyWatched")) {
+                holder.addListLayout.setVisibility(View.GONE);
+                holder.removeListLayout.setVisibility(View.VISIBLE);
+
+            } else {
+                holder.addListLayout.setVisibility(View.VISIBLE);
+                holder.removeListLayout.setVisibility(View.GONE);
+            }
+
+            holder.addPrevWatchedBtn.setEnabled(true);
+            holder.addWatchLaterBtn.setEnabled(true);
+            holder.removeFromListBtn.setEnabled(true);
+
+
             holder.showMoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(holder.extraInfoLayout.getVisibility() == View.GONE) {
                         holder.showMoreBtn.setText("Show Less Info");
-
-                        holder.posterReleaseDate.setText("Release Date: " + galleryItem.getReleaseDate());
-                        holder.posterRating.setText("Average Rating: " + galleryItem.getVoteAverage() + "/10");
-                        holder.posterOverview.setText("Overview: " + galleryItem.getOverview());
 
                         holder.extraInfoLayout.setVisibility(View.VISIBLE);
 
