@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="MovieFinder/app/src/main/res/drawable/ic_baseline_local_movies_24.xml" value="0.1171875" />
         <entry key="MovieFinder/app/src/main/res/drawable/ic_launcher_background.xml" value="0.128125" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_account_info.xml" value="0.1" />
         <entry key="MovieFinder/app/src/main/res/layout/activity_app_bar.xml" value="0.10052083333333334" />

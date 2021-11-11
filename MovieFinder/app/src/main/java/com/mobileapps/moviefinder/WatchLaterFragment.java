@@ -36,11 +36,10 @@ public class WatchLaterFragment extends MoviePosterFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v;
+        View v = inflater.inflate(R.layout.fragment_movie_poster, container, false);
 
         List<GalleryItem> gallery = new ArrayList<GalleryItem>();
-        v = getDataAndLoadAdapter("WatchLater", inflater, container,
-                gallery, requireActivity(), "WatchLat");
+        getDataAndLoadAdapter("WatchLater", v, gallery, requireActivity(), "WatchLat");
 
         pageTitle = v.findViewById(R.id.pageTitle);
         pageTitle.setText("Movies to Watch Later");

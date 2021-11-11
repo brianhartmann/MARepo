@@ -39,11 +39,10 @@ public class PreviouslyWatchedFragment extends MoviePosterFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View v;
+        View v = inflater.inflate(R.layout.fragment_movie_poster, container, false);
 
         List<GalleryItem> gallery = new ArrayList<GalleryItem>();
-        v = getDataAndLoadAdapter("PreviouslyWatched", inflater, container,
-                gallery, requireActivity(), "PrevWatch");
+        getDataAndLoadAdapter("PreviouslyWatched", v, gallery, requireActivity(), "PrevWatch");
 
         pageTitle = v.findViewById(R.id.pageTitle);
         pageTitle.setText("Previously Watched Movies");

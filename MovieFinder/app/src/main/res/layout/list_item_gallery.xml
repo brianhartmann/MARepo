@@ -17,7 +17,7 @@
 		android:layout_gravity="center_horizontal">
 
 		<LinearLayout
-			android:layout_width="214dp"
+			android:layout_width="300dp"
 			android:layout_height="wrap_content"
 			android:orientation="vertical">
 
@@ -26,9 +26,10 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center"
-				android:layout_marginTop="16dp"
 				android:layout_marginLeft="16dp"
+				android:layout_marginTop="16dp"
 				android:layout_marginRight="16dp"
+				android:layout_marginBottom="16dp"
 				android:fontFamily="sans-serif-medium"
 				android:text="Photo Title"
 				android:textColor="@color/black"
@@ -66,19 +67,20 @@
 					android:id="@+id/poster_release_date"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:layout_gravity="fill"
 					android:layout_marginLeft="8dp"
 					android:layout_marginTop="16dp"
 					android:layout_marginRight="8dp"
 					android:fontFamily="sans-serif-medium"
 					android:text="Release Date: "
 					android:textColor="@color/black"
-					android:textSize="14sp"
-					android:layout_gravity="fill"/>
+					android:textSize="14sp" />
 
 				<TextView
 					android:id="@+id/poster_rating"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:layout_gravity="fill"
 					android:layout_marginLeft="8dp"
 					android:layout_marginTop="6dp"
 					android:layout_marginRight="8dp"
@@ -86,13 +88,13 @@
 					android:fontFamily="sans-serif-medium"
 					android:text="Average Rating: "
 					android:textColor="@color/black"
-					android:textSize="14sp"
-					android:layout_gravity="fill"/>
+					android:textSize="14sp" />
 
 				<TextView
 					android:id="@+id/poster_overview"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:layout_gravity="fill"
 					android:layout_marginLeft="8dp"
 					android:layout_marginTop="16dp"
 					android:layout_marginRight="8dp"
@@ -101,17 +103,18 @@
 					android:gravity="center"
 					android:text="Overview: "
 					android:textColor="@color/black"
-					android:textSize="16sp"
-					android:layout_gravity="fill"/>
+					android:textSize="16sp" />
 
 
-				<include layout="@layout/add_to_lists_buttons"
-					android:visibility="visible"
-					android:id="@+id/addListLayout"/>
+				<include
+					android:id="@+id/addListLayout"
+					layout="@layout/add_to_lists_buttons"
+					android:visibility="visible" />
 
-				<include layout="@layout/remove_from_list_button"
-					android:visibility="gone"
-					android:id="@+id/removeListLayout"/>
+				<include
+					android:id="@+id/removeListLayout"
+					layout="@layout/remove_from_list_button"
+					android:visibility="gone" />
 
 			</LinearLayout>
 		</LinearLayout>
