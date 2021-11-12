@@ -124,8 +124,8 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         searchForMovies = v.findViewById(R.id.searchForMoviesfor);
         category = v.findViewById(R.id.category);
         numPages = v.findViewById(R.id.editTextNumber);
-        numYear = v.findViewById(R.id.numberField);
-        person = v.findViewById(R.id.moviePerson);
+        numYear = v.findViewById(R.id.numberField);     //here
+        person = v.findViewById(R.id.moviePerson);      //here
         progressBar = v.findViewById(R.id.buffering);
 
         previouslyWatched = new ArrayList<>();
@@ -233,7 +233,6 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
                 url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_watch_providers=%d&watch_region=US", streamerMapping.get(dropDownSelected));
                 break;
             case "With actor/actress":
-
                 //format query to replace spaces with '%20'
                 String newMoviePerson = "";
                 StringBuilder stringBuilder = new StringBuilder();
@@ -259,67 +258,80 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
 
     //sends request to api (structure of api request gotten from android developer guide)
     public void sendAPIRequest(String url, Activity activity, String request, int numberOfMovies){
-        // Formulate the request and handle the response.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                response -> {
-                    try {
+        Boolean containsAllRequiredInfo = true;
 
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = new JSONArray();
+        //checks that they entered all info required
+        switch (request){
+            case "Within Certain Length":
+            case "Year":
+                if (numYear.getText().toString().equals("")){
+                    containsAllRequiredInfo = false;
+                }
+                break;
+            case "With actor/actress":
+                 if (person.getText().toString().equals("")){
+                     containsAllRequiredInfo = false;
+                 }
+        }
 
-                        //gets most popular actor/actress results and searches again for their movies
-                        if (request.equals("With actor/actress")){
-                            if (jsonObject.getJSONArray("results").length() == 0){
-                                Toast.makeText(getContext(), "No actor/actress with that name", Toast.LENGTH_SHORT).show();
+        if (containsAllRequiredInfo) {
+            // Formulate the request and handle the response.
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                    response -> {
+                        try {
 
-                                progressBar.setVisibility(View.INVISIBLE);
-                            } else {
-                                String id = jsonObject.getJSONArray("results").getJSONObject(0).getString("id");
-                                String url1 = String.format("https://api.themoviedb.org/3/person/%s/movie_credits?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US",
-                                        id);
-                                sendAPIRequest(url1, activity, "credits", numberOfMovies);
-                            }
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = new JSONArray();
 
+                            //gets most popular actor/actress results and searches again for their movies
+                            if (request.equals("With actor/actress")) {
+                                if (jsonObject.getJSONArray("results").length() == 0) {
+                                    Toast.makeText(getContext(), "No actor/actress with that name", Toast.LENGTH_SHORT).show();
 
-
-                        } else {
-                            //for parsing movies from actor/actress
-                            if (request.equals("credits")){
-                                jsonArray = jsonObject.getJSONArray("cast");
-                            } else {    //for parsing other categories
-                                jsonArray = jsonObject.getJSONArray("results");
-
-                            }
-
-                            //dont display if no results
-                            if (jsonArray.length() == 0){
-                                Toast.makeText(getContext(), "No actor/actress with that name", Toast.LENGTH_SHORT).show();
-                            } else {
-                                int count = 0;
-                                JSONArray newJsonArray = new JSONArray();
-                                for (int i = 0; i < jsonArray.length(); i++){
-                                    if (newJsonArray.length() >= numberOfMovies) {
-                                        break;
-                                    } else if (!previouslyWatched.contains(Integer.parseInt(jsonArray.getJSONObject(i).getString("id")))){
-                                        newJsonArray.put(count, jsonArray.getJSONObject(i));
-                                        count++;
-                                    }
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                } else {
+                                    String id = jsonObject.getJSONArray("results").getJSONObject(0).getString("id");
+                                    String url1 = String.format("https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_cast=%s", id);
+                                    sendAPIRequest(url1, activity, "credits", numberOfMovies);
                                 }
 
-                                progressBar.setVisibility(View.GONE);
-                                goToResultsScreen(activity, newJsonArray);
+
+                            } else {
+                                
+                                jsonArray = jsonObject.getJSONArray("results");
+                                //dont display if no results
+                                if (jsonArray.length() == 0) {
+                                    Toast.makeText(getContext(), "No actor/actress with that name", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    int count = 0;
+                                    JSONArray newJsonArray = new JSONArray();
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        if (newJsonArray.length() >= numberOfMovies) {
+                                            break;
+                                        } else if (!previouslyWatched.contains(Integer.parseInt(jsonArray.getJSONObject(i).getString("id")))) {
+                                            newJsonArray.put(count, jsonArray.getJSONObject(i));
+                                            count++;
+                                        }
+                                    }
+
+                                    progressBar.setVisibility(View.GONE);
+                                    goToResultsScreen(activity, newJsonArray);
+                                }
+
                             }
-
+                        } catch (JSONException e) {
+                            Log.d("FindMovie", e.toString());
                         }
-                    } catch (JSONException e) {
-                        Log.d("FindMovie", e.toString());
-                    }
 
-                },
-                error -> Log.d("FindMovieFragment", "Failed API Request"));
+                    },
+                    error -> Log.d("FindMovieFragment", "Failed API Request"));
 
-        // Add the request to the RequestQueue.
-        requestQueue.add(stringRequest);
+            // Add the request to the RequestQueue.
+            requestQueue.add(stringRequest);
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+            Toast.makeText(getContext(), "Error. Must enter all info", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //starts results screen
