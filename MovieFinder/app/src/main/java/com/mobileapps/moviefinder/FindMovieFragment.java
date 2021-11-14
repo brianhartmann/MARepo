@@ -222,11 +222,11 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
                         Integer.parseInt(numYear.getText().toString()));
                 break;
             case "Within certain length":
-                url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_runtime.lte=%d",
+                url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_runtime.gte=10&with_runtime.lte=%d",
                         Integer.parseInt(numYear.getText().toString()));
                 break;
             case "Genre":
-                url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_genres=%d",
+                url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&watch_region=US&with_genres=%d&watch_region=US",
                         genreMapping.get(dropDownSelected));
                 break;
             case "From streaming service":
