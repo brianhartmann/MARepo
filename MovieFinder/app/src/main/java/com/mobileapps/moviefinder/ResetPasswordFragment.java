@@ -1,6 +1,8 @@
 package com.mobileapps.moviefinder;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -45,11 +47,12 @@ public class ResetPasswordFragment extends Fragment {
             updatedPassword = v.findViewById(R.id.updatedPassword);
             updatedPasswordConfirm = v.findViewById(R.id.updatedPasswordConfirm);
             resetPasswordBtn = v.findViewById(R.id.resetPasswordBtn);
+            disableButton(resetPasswordBtn);
 
             updatedPasswordConfirm.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    resetPasswordBtn.setEnabled(false);
+                    disableButton(resetPasswordBtn);
                 }
 
                 @Override
@@ -61,7 +64,7 @@ public class ResetPasswordFragment extends Fragment {
 
                         } else {
                             if(str.toString().trim().equals(updatedPassword.getText().toString().trim())) {
-                                resetPasswordBtn.setEnabled(true);
+                                enableButton(resetPasswordBtn);
 
                             } else {
                                 updatedPasswordConfirm.setError("Passwords must match.");
@@ -90,7 +93,7 @@ public class ResetPasswordFragment extends Fragment {
 
                                         updatedPassword.setText(null);
                                         updatedPasswordConfirm.setText("");
-                                        resetPasswordBtn.setEnabled(false);
+                                        disableButton(resetPasswordBtn);
 
                                     } else {
                                         Toast.makeText(getContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -102,6 +105,18 @@ public class ResetPasswordFragment extends Fragment {
         }
 
         return v;
+    }
+
+    public void disableButton(Button btn) {
+        btn.setEnabled(false);
+        btn.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(149, 149, 149)));
+        btn.getBackground().setAlpha(170);
+    }
+
+    public void enableButton(Button btn) {
+        btn.setEnabled(true);
+        btn.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(23, 31, 198)));
+        btn.getBackground().setAlpha(255);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.mobileapps.moviefinder;
 /* Code is written by Adam Champion from his TicTacToe application*/
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.annotation.LayoutRes;
@@ -20,6 +21,8 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
+        // Only allow vertical/portrait screen orientation
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);

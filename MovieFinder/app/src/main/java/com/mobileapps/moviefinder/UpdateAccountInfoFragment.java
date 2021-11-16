@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-public class UpdateAccountInfoFragment extends Fragment {
+public class UpdateAccountInfoFragment extends ResetPasswordFragment {
     private EditText updatedEmail, updatedName;
     private TextView currentUserEmail, currentUserName;
     private Button updateEmailBtn, updateNameBtn;
@@ -48,22 +48,24 @@ public class UpdateAccountInfoFragment extends Fragment {
 
             updatedEmail = v.findViewById(R.id.updatedEmail);
             updateEmailBtn = v.findViewById(R.id.updateEmailBtn);
+            disableButton(updateEmailBtn);
 
             updatedEmail.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    updateEmailBtn.setEnabled(false);
+                    disableButton(updateEmailBtn);
                 }
 
                 @Override
                 public void onTextChanged(CharSequence str, int i, int i1, int i2) {
                     if(str.toString().trim().length() != 0) {
 
-                        if(str.toString().equals(email)) {
+                        String newEmail = user.getEmail();
+                        if(str.toString().equals(newEmail)) {
                             updatedEmail.setError("Cannot update email, same as current email.");
 
                         } else {
-                            updateEmailBtn.setEnabled(true);
+                            enableButton(updateEmailBtn);
                         }
                     }
                 }
@@ -86,7 +88,7 @@ public class UpdateAccountInfoFragment extends Fragment {
                                         Toast.makeText(getContext(), "Email address was updated. ", Toast.LENGTH_LONG).show();
 
                                         updatedEmail.setText("");
-                                        updateEmailBtn.setEnabled(false);
+                                        disableButton(updateEmailBtn);
                                         currentUserEmail.setText(user.getEmail());
 
                                     } else {
@@ -103,22 +105,24 @@ public class UpdateAccountInfoFragment extends Fragment {
 
             updatedName = v.findViewById(R.id.updatedName);
             updateNameBtn = v.findViewById(R.id.updateNameBtn);
+            disableButton(updateNameBtn);
 
             updatedName.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    updateNameBtn.setEnabled(false);
+                    disableButton(updateNameBtn);
                 }
 
                 @Override
                 public void onTextChanged(CharSequence str, int i, int i1, int i2) {
                     if(str.toString().trim().length() != 0) {
 
-                        if(str.toString().equals(name)) {
+                        String newName = user.getDisplayName();
+                        if(str.toString().equals(newName)) {
                             updatedName.setError("Cannot update name, same as current name.");
 
                         } else {
-                            updateNameBtn.setEnabled(true);
+                            enableButton(updateNameBtn);
                         }
                     }
                 }
@@ -145,7 +149,7 @@ public class UpdateAccountInfoFragment extends Fragment {
                                         Toast.makeText(getContext(), "Name was updated. ", Toast.LENGTH_LONG).show();
 
                                         updatedName.setText("");
-                                        updateNameBtn.setEnabled(false);
+                                        disableButton(updateNameBtn);
                                         currentUserName.setText(user.getDisplayName());
 
                                     } else {
