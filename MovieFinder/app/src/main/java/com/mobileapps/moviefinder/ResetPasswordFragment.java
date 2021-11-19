@@ -1,6 +1,5 @@
 package com.mobileapps.moviefinder;
 
-import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,13 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,9 +31,7 @@ public class ResetPasswordFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View v;
-        Activity activity = requireActivity();
-        v = inflater.inflate(R.layout.fragment_reset_password, container, false);
+        View v = inflater.inflate(R.layout.fragment_reset_password, container, false);
 
         /* Code was used and modified from Firebase documentation, firebase.google.com, for managing users */
 
@@ -79,28 +74,21 @@ public class ResetPasswordFragment extends Fragment {
                 }
             });
 
-            resetPasswordBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            resetPasswordBtn.setOnClickListener((View view) -> {
+                user.updatePassword(updatedPasswordConfirm.getText().toString().trim())
+                        .addOnCompleteListener((@NonNull Task<Void> task) -> {
+                            if (task.isSuccessful()) {
+                                Log.d("ResetPassword", "User password updated.");
+                                Toast.makeText(getContext(), "Password was updated. ", Toast.LENGTH_LONG).show();
 
-                    user.updatePassword(updatedPasswordConfirm.getText().toString().trim())
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d("ResetPassword", "User password updated.");
-                                        Toast.makeText(getContext(), "Password was updated. ", Toast.LENGTH_LONG).show();
+                                updatedPassword.setText(null);
+                                updatedPasswordConfirm.setText("");
+                                disableButton(resetPasswordBtn);
 
-                                        updatedPassword.setText(null);
-                                        updatedPasswordConfirm.setText("");
-                                        disableButton(resetPasswordBtn);
-
-                                    } else {
-                                        Toast.makeText(getContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
+                            } else {
+                                Toast.makeText(getContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
             });
         }
 

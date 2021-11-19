@@ -13,9 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,7 +41,7 @@ public class UpdateAccountInfoFragment extends ResetPasswordFragment {
             String name = user.getDisplayName();
 
             // Handle updating a user's email address
-            currentUserEmail = (TextView) v.findViewById(R.id.currentUserEmail);
+            currentUserEmail = v.findViewById(R.id.currentUserEmail);
             currentUserEmail.setText(email);
 
             updatedEmail = v.findViewById(R.id.updatedEmail);
@@ -76,31 +74,25 @@ public class UpdateAccountInfoFragment extends ResetPasswordFragment {
                 }
             });
 
-            updateEmailBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    user.updateEmail(updatedEmail.getText().toString().trim())
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d("UpdateAccountInfo", "User email address updated.");
-                                        Toast.makeText(getContext(), "Email address was updated. ", Toast.LENGTH_LONG).show();
+            updateEmailBtn.setOnClickListener((View view)  -> {
+                user.updateEmail(updatedEmail.getText().toString().trim())
+                    .addOnCompleteListener((@NonNull Task<Void> task) -> {
+                        if (task.isSuccessful()) {
+                            Log.d("UpdateAccountInfo", "User email address updated.");
+                            Toast.makeText(getContext(), "Email address was updated. ", Toast.LENGTH_LONG).show();
 
-                                        updatedEmail.setText("");
-                                        disableButton(updateEmailBtn);
-                                        currentUserEmail.setText(user.getEmail());
+                            updatedEmail.setText("");
+                            disableButton(updateEmailBtn);
+                            currentUserEmail.setText(user.getEmail());
 
-                                    } else {
-                                        Toast.makeText(getContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
+                        } else {
+                            Toast.makeText(getContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
             });
 
             // Handle updating a user's name
-            currentUserName = (TextView) v.findViewById(R.id.currentUserName);
+            currentUserName = v.findViewById(R.id.currentUserName);
             currentUserName.setText(name);
 
             updatedName = v.findViewById(R.id.updatedName);
@@ -133,31 +125,25 @@ public class UpdateAccountInfoFragment extends ResetPasswordFragment {
                 }
             });
 
-            updateNameBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(updatedName.getText().toString().trim())
-                            .build();
+            updateNameBtn.setOnClickListener((View view) -> {
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(updatedName.getText().toString().trim())
+                        .build();
 
-                    user.updateProfile(profileUpdates)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d("UpdateAccountInfo", "User profile (name) updated.");
-                                        Toast.makeText(getContext(), "Name was updated. ", Toast.LENGTH_LONG).show();
+                user.updateProfile(profileUpdates)
+                        .addOnCompleteListener((@NonNull Task<Void> task) -> {
+                            if (task.isSuccessful()) {
+                                Log.d("UpdateAccountInfo", "User profile (name) updated.");
+                                Toast.makeText(getContext(), "Name was updated. ", Toast.LENGTH_LONG).show();
 
-                                        updatedName.setText("");
-                                        disableButton(updateNameBtn);
-                                        currentUserName.setText(user.getDisplayName());
+                                updatedName.setText("");
+                                disableButton(updateNameBtn);
+                                currentUserName.setText(user.getDisplayName());
 
-                                    } else {
-                                        Toast.makeText(getContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
+                            } else {
+                                Toast.makeText(getContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
             });
         }
 

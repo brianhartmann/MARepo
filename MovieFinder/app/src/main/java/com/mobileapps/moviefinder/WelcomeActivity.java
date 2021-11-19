@@ -1,6 +1,5 @@
 package com.mobileapps.moviefinder;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -10,8 +9,6 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class WelcomeActivity extends AppBarActivity {
     Button findMoviePageBtn;
@@ -27,7 +24,7 @@ public class WelcomeActivity extends AppBarActivity {
 
         findMoviePageBtn = findViewById(R.id.findMoviePage);
         logout = findViewById(R.id.logoutBtn);
-        welcomeText = (TextView) findViewById(R.id.textView2);
+        welcomeText = findViewById(R.id.textView2);
 
         // Welcome the new user with their name
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -38,24 +35,16 @@ public class WelcomeActivity extends AppBarActivity {
         }
 
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
+        logout.setOnClickListener((View view) -> {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         });
 
 
 
 
 
-        findMoviePageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), FindMovieActivity.class));
-            }
-        });
+        findMoviePageBtn.setOnClickListener((View view) -> startActivity(new Intent(getApplicationContext(), FindMovieActivity.class)));
 
     }
 }

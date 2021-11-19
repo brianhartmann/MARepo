@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
     Button mRegisterPage;
     Button mLoginPage;
 
@@ -23,19 +22,9 @@ public class MainActivity extends AppCompatActivity {
         mRegisterPage = findViewById(R.id.registerPage);
         mLoginPage = findViewById(R.id.loginPage);
 
-        mRegisterPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
-            }
-        });
+        mRegisterPage.setOnClickListener((View view) -> startActivity(new Intent(getApplicationContext(), RegisterActivity.class)));
 
-        mLoginPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-            }
-        });
+        mLoginPage.setOnClickListener((View view) -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)));
 
 
     }

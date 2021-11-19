@@ -14,7 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 /* Modeled with help from Adam Champion's GameOptionsFragment from his TicTacToe application*/
 
 public class AppBarActivity extends AppCompatActivity {
-    private static final String TAG = "AppBarActivity";
     Toolbar appToolBar;
 
     @Override
@@ -22,7 +21,7 @@ public class AppBarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_bar);
 
-        appToolBar = (Toolbar) findViewById(R.id.toolbar);
+        appToolBar = findViewById(R.id.toolbar);
         setSupportActionBar(appToolBar);
     }
 
