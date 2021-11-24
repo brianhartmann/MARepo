@@ -19,6 +19,9 @@
     <string name="watch_later">Watch Later</string>
     <string name="movies">Movies</string>
     <string name="minutes">Minutes</string>
+    <string name="previously_watched_list">Previously Watched List</string>
+    <string name="add_movie_to_previously_watched_list">Add movie to previously watched list</string>
+    <string name="add_movie_to_watch_later_list">Add movie to watch later list</string>
     <string-array name="filter_categories">
         <item>Genre</item>
         <item>Year</item>

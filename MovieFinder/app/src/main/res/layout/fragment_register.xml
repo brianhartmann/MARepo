@@ -131,6 +131,7 @@
         android:layout_marginEnd="4dp"
         android:backgroundTint="#171FC6"
         android:text="@string/create"
+        android:contentDescription="Create the new account"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"

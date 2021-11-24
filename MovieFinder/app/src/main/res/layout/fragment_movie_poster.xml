@@ -8,15 +8,28 @@
 
     <include
         android:id="@+id/include3"
-        layout="@layout/activity_app_bar" />
+        layout="@layout/activity_app_bar"
+        tools:layout_editor_absoluteX="-11dp"
+        tools:layout_editor_absoluteY="34dp" />
+
+    <Button
+        android:id="@+id/increase"
+        android:layout_width="46dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="292dp"
+        android:layout_marginTop="84dp"
+        android:text="+"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/postersRecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include3"
+        app:layout_constraintVertical_bias="0.772" />
 
     <TextView
         android:id="@+id/pageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="113dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="109dp"
         android:layout_marginBottom="490dp"
         android:fontFamily="sans-serif-medium"
         android:text="Generated Movies"
@@ -25,7 +38,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.375" />
 
     <TextView
         android:id="@+id/description"
@@ -47,8 +61,8 @@
         android:id="@+id/postersRecyclerView"
         android:layout_width="350dp"
         android:layout_height="503dp"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,5 +70,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pageTitle"
         app:layout_constraintVertical_bias="0.4" />
+
+    <Button
+        android:id="@+id/decrease"
+        android:layout_width="46dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="84dp"
+        android:text="-"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/postersRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.309"
+        app:layout_constraintStart_toEndOf="@+id/increase"
+        app:layout_constraintTop_toTopOf="@+id/include3"
+        app:layout_constraintVertical_bias="0.772" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,12 @@
 package com.mobileapps.moviefinder;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +32,13 @@ import java.util.List;
 import java.util.Map;
 
 public class MoviePosterFragment extends Fragment {
+    Button increaseText;
+    Button decreaseText;
+    int sizeChange;
 
+    Map<String, Object> prevWatchedList;
+    Map<String, Object> watchLaterList;
+    List<GalleryItem> galItems;
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -41,11 +49,14 @@ public class MoviePosterFragment extends Fragment {
         MoviePosterActivity activity = (MoviePosterActivity) getActivity();
         View v = inflater.inflate(R.layout.fragment_movie_poster, container, false);
 
+
+
+
         String jsonArr = "";
         if(activity != null) {
             jsonArr = activity.getFindMovieData();
         }
-        List<GalleryItem> galItems = new ArrayList<>();
+        galItems = new ArrayList<>();
 
         try{
             JSONArray jsonArray = new JSONArray(jsonArr);
@@ -78,9 +89,12 @@ public class MoviePosterFragment extends Fragment {
         RecyclerView postersRecyclerView = v.findViewById(R.id.postersRecyclerView);
         postersRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         PosterAdapter adapter = new PosterAdapter(galItems, fragmentName,
-                activity, null, null, null, null);
+                activity, null, null, null, null, 0);
         postersRecyclerView.setAdapter(adapter);
 
+
+            increaseText = v.findViewById(R.id.increase);
+            decreaseText = v.findViewById(R.id.decrease);
 
         // Handle getting the current user's previously watched and/or watch later lists
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -95,8 +109,8 @@ public class MoviePosterFragment extends Fragment {
                         Log.d(fragmentName, "DocumentSnapshot data: " + document.getData());
                         Map<String, Object> userRecord = document.getData();
 
-                        Map<String, Object> prevWatchedList = new HashMap<>();
-                        Map<String, Object> watchLaterList = new HashMap<>();
+                        prevWatchedList = new HashMap<>();
+                        watchLaterList = new HashMap<>();
                         if(userRecord != null) {
                             prevWatchedList = (Map<String, Object>) userRecord.get("Previously Watched");
                             watchLaterList = (Map<String, Object>) userRecord.get("Watch Later");
@@ -134,8 +148,31 @@ public class MoviePosterFragment extends Fragment {
                             }
                         }
 
+                            increaseText.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    sizeChange++;
+                                    postersRecyclerView.swapAdapter(new PosterAdapter(galItems, fragmentName,
+                                            activity, prevWatchedList, watchLaterList, documentReference, userRecord, 1), false);
+
+                                }
+
+                            });
+
+                            decreaseText.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    sizeChange--;
+                                    postersRecyclerView.swapAdapter(new PosterAdapter(galItems, fragmentName,
+                                            activity, prevWatchedList, watchLaterList, documentReference, userRecord, -1), false);
+                                    Log.d("Results", String.valueOf(sizeChange));
+                                }
+                            });
+
+
+
                         postersRecyclerView.swapAdapter(new PosterAdapter(galItems, fragmentName,
-                                activity, prevWatchedList, watchLaterList, documentReference, userRecord), false);
+                                activity, prevWatchedList, watchLaterList, documentReference, userRecord, 0), false);
                     } else {
                         Log.d(fragmentName, "No such document");
                     }

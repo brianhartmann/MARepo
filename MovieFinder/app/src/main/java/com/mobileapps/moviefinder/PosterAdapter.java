@@ -4,6 +4,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +35,11 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterHold
     private final Map<String, Object> mWatchLaterList;
     private final DocumentReference mDocumentReference;
     private final Map<String, Object> mUserRecord;
+    static int sizeChange = 0;
+
 
     public PosterAdapter(List<GalleryItem> galleryItems, String fragName, FragmentActivity activity, Map<String, Object> prevWatchList,
-                         Map<String, Object> watchLatList, DocumentReference docRef, Map<String, Object> userRec) {
+                         Map<String, Object> watchLatList, DocumentReference docRef, Map<String, Object> userRec, int changeInSize) {
         mGalleryItems = galleryItems;
         mFragName = fragName;
         mActivity = activity;
@@ -45,7 +48,13 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterHold
 
         mUserRecord = userRec;
         mDocumentReference = docRef;
+
+        sizeChange = changeInSize;
+
+
     }
+
+
 
     public static class PosterHolder extends RecyclerView.ViewHolder {
         private final TextView mItemTextView;
@@ -57,6 +66,7 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterHold
 
         public PosterHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_gallery, parent, false));
+            Log.d("Change", String.valueOf(sizeChange));
             mItemTextView = itemView.findViewById(R.id.poster_title);
             posterImageView = itemView.findViewById(R.id.poster);
             posterOverview = itemView.findViewById(R.id.poster_overview);
@@ -71,6 +81,10 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterHold
 
             addListLayout = itemView.findViewById(R.id.addListLayout);
             removeListLayout = itemView.findViewById(R.id.removeListLayout);
+
+
+
+
         }
     }
 
@@ -232,6 +246,15 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterHold
                 }).addOnFailureListener((@NonNull Exception e) -> Log.d("PosterAdapter", "onFailure: " + e.toString()));
             }
         });
+
+        holder.mItemTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX,holder.mItemTextView.getTextSize()+sizeChange);
+        holder.posterOverview.setTextSize(TypedValue.COMPLEX_UNIT_PX,holder.posterOverview.getTextSize()+sizeChange);
+        holder.posterRating.setTextSize(TypedValue.COMPLEX_UNIT_PX,holder.posterRating.getTextSize()+sizeChange);
+        holder.posterReleaseDate.setTextSize(TypedValue.COMPLEX_UNIT_PX,holder.posterReleaseDate.getTextSize()+sizeChange );
+
+
+
+
     }
 
     @Override

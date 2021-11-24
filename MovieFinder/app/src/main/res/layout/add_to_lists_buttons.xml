@@ -16,6 +16,7 @@
 		android:fontFamily="sans-serif-medium"
 		android:gravity="center"
 		android:text="Add Movie To: "
+
 		android:textColor="@color/black"
 		android:textSize="12sp"
 		android:layout_gravity="fill"/>
@@ -28,8 +29,9 @@
 		android:layout_marginTop="5dp"
 		android:backgroundTint="#171FC6"
 		android:onClick="showMore"
-		android:text="Previously Watched List"
+		android:text="@string/previously_watched_list"
 		android:textColor="#FFFFFF"
+		android:contentDescription="@string/add_movie_to_previously_watched_list"
 		android:textSize="10sp"
 		android:allowClickWhenDisabled="false"/>
 
@@ -41,6 +43,7 @@
 		android:layout_marginBottom="10dp"
 		android:backgroundTint="#171FC6"
 		android:onClick="showMore"
+		android:contentDescription="@string/add_movie_to_watch_later_list"
 		android:text="Watch Later List"
 		android:textColor="#FFFFFF"
 		android:textSize="11sp"

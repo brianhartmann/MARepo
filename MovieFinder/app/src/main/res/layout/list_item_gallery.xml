@@ -31,7 +31,7 @@
 				android:layout_marginRight="16dp"
 				android:layout_marginBottom="16dp"
 				android:fontFamily="sans-serif-medium"
-				android:text="Photo Title"
+				android:text="Title"
 				android:textColor="@color/black"
 				android:textSize="18sp" />
 
@@ -52,6 +52,7 @@
 				android:layout_marginBottom="10dp"
 				android:backgroundTint="#171FC6"
 				android:text="Show More Info"
+				android:contentDescription="get more info about the movie"
 				android:textColor="#FFFFFF"
 				android:textSize="11sp"
 				android:textStyle="bold" />
