@@ -8,7 +8,7 @@
 # Mobile App Description
         --- MovieFinder App ---
         Our application helps users find a movie to watch by recommending movies to them based 
-        on certain filters they input.
+        on certain filters they input. The most popular/recent movies will be suggested.
         Users will be able to create, read, update, and/or delete their accounts which will store
         their name, email, password, previously watched list, and watch later list. 
         
@@ -17,7 +17,8 @@
         overall category of movies they wish to generate and a specific category. For example) they
         could choose to generate movie recommendations based on 'Genre' in the 'Comedy' Genre.
         They will also be prompted to enter the number of movie recommendations they wish to be 
-        generated. They can only generate up to 20 movie recommendations at a time. Then the user
+        generated. They can only generate up to 20 movie recommendations at a time. This max may 
+        vary if a user has many movies on their previously watched list. Then the user
         can click the generate button or shake their phone in order to generate the movies. This 
         will lead the user to recommended movies, found on The Movie Database, based on their
         filtered fields where they can see the movie posters and also learn more about each movie.
