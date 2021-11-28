@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -215,15 +219,31 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         }
 
         String url = "";
+        boolean invalid = false;
         String selectedItem = filterCat.getSelectedItem().toString();
         switch (selectedItem) {
+
             case "Year":
+                try {
                 url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&primary_release_year=%d",
                         Integer.parseInt(numYear.getText().toString()));
+                if (Integer.parseInt(numYear.getText().toString()) > 2022 || Integer.parseInt(numYear.getText().toString()) <= 1920){
+                    Toast.makeText(getContext(), "Error. Must enter valid year", Toast.LENGTH_SHORT).show();
+                    invalid = true;
+                }
+                } catch (NumberFormatException e){
+                    Toast.makeText(getContext(), "Error. Must enter all info", Toast.LENGTH_SHORT).show();
+                    invalid = true;
+                }
                 break;
             case "Within certain length":
+                try {
                 url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&with_runtime.gte=10&with_runtime.lte=%d",
                         Integer.parseInt(numYear.getText().toString()));
+                } catch (NumberFormatException e){
+                    Toast.makeText(getContext(), "Error. Must enter all info", Toast.LENGTH_SHORT).show();
+                    invalid = true;
+                }
                 break;
             case "Genre":
                 url = String.format(Locale.US, "https://api.themoviedb.org/3/discover/movie?api_key=60567f6564d6a0a4630275f9658c2fd2&language=en-US&page=1&watch_region=US&with_genres=%d&watch_region=US",
@@ -251,8 +271,11 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
                 System.exit(1);
         }
 
-        progressBar.setVisibility(View.VISIBLE);
-        sendAPIRequest(url, activity, selectedItem, numPagesInt);
+        if (!invalid){
+            progressBar.setVisibility(View.VISIBLE);
+            sendAPIRequest(url, activity, selectedItem, numPagesInt);
+        }
+
 
     }
 
@@ -260,10 +283,18 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
     public void sendAPIRequest(String url, Activity activity, String request, int numberOfMovies){
         Boolean containsAllRequiredInfo = true;
 
+        ConnectivityManager cm =
+                (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
         //checks that they entered all info required
         switch (request){
             case "Within Certain Length":
             case "Year":
+                Log.d("FindMovie", numYear.getText().toString());
                 if (numYear.getText().toString().equals("")){
                     containsAllRequiredInfo = false;
                 }
@@ -274,7 +305,7 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
                  }
         }
 
-        if (containsAllRequiredInfo) {
+        if (containsAllRequiredInfo && isConnected) {
             // Formulate the request and handle the response.
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                     response -> {
@@ -330,7 +361,11 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
             requestQueue.add(stringRequest);
         } else {
             progressBar.setVisibility(View.INVISIBLE);
-            Toast.makeText(getContext(), "Error. Must enter all info", Toast.LENGTH_SHORT).show();
+            if (isConnected) {
+                Toast.makeText(getContext(), "Error. Must enter all info", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Error. Cannot Connect to the internet", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -412,6 +447,7 @@ public class FindMovieFragment extends Fragment implements AdapterView.OnItemSel
         mSensorManager.unregisterListener(mShakeDetector);
         super.onPause();
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

@@ -247,6 +247,21 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterHold
             }
         });
 
+
+//        ViewGroup.LayoutParams params = holder.posterImageView.getLayoutParams();
+//        Log.d("Poster", String.valueOf(params.height));
+//        Log.d("Poster", String.valueOf(params.height));
+//        params.
+//        if (sizeChange > 0){
+//            params.width = params.width + 1;
+//            params.height = (params.height + 2);
+//        } else if (sizeChange < 0){
+//            params.width = params.width - 1;
+//            params.height = (params.height - 2);
+//        }
+
+//        holder.posterImageView.setLayoutParams(params);
+        
         holder.mItemTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX,holder.mItemTextView.getTextSize()+sizeChange);
         holder.posterOverview.setTextSize(TypedValue.COMPLEX_UNIT_PX,holder.posterOverview.getTextSize()+sizeChange);
         holder.posterRating.setTextSize(TypedValue.COMPLEX_UNIT_PX,holder.posterRating.getTextSize()+sizeChange);
