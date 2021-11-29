@@ -42,26 +42,17 @@ public class MainUITest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainUITest() {
+    public void mainUILoginAndGenerateTest() {
+        // Test logging in to a previously made account
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.registerPage), withText("Create New Account"),
+                allOf(withId(R.id.loginPage), withText("Login"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                2),
+                                5),
                         isDisplayed()));
         materialButton.perform(click());
-
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.name),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.fragment_container),
-                                        0),
-                                2),
-                        isDisplayed()));
-        appCompatEditText.perform(replaceText("Sam Baker"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.email),
@@ -69,7 +60,7 @@ public class MainUITest {
                                 childAtPosition(
                                         withId(R.id.fragment_container),
                                         0),
-                                3),
+                                2),
                         isDisplayed()));
         appCompatEditText2.perform(replaceText("baker@email.com"), closeSoftKeyboard());
 
@@ -79,62 +70,23 @@ public class MainUITest {
                                 childAtPosition(
                                         withId(R.id.fragment_container),
                                         0),
-                                4),
+                                3),
                         isDisplayed()));
         appCompatEditText3.perform(replaceText("123456"), closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText4 = onView(
-                allOf(withId(R.id.passwordConfirm),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.fragment_container),
-                                        0),
-                                5),
-                        isDisplayed()));
-        appCompatEditText4.perform(replaceText("123456"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText5 = onView(
-                allOf(withId(R.id.passwordConfirm), withText("123456"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.fragment_container),
-                                        0),
-                                5),
-                        isDisplayed()));
-        appCompatEditText5.perform(click());
-
-        ViewInteraction appCompatEditText6 = onView(
-                allOf(withId(R.id.passwordConfirm), withText("123456"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.fragment_container),
-                                        0),
-                                5),
-                        isDisplayed()));
-        appCompatEditText6.perform(replaceText("123456"));
-
-        ViewInteraction appCompatEditText7 = onView(
-                allOf(withId(R.id.passwordConfirm), withText("123456"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.fragment_container),
-                                        0),
-                                5),
-                        isDisplayed()));
-        appCompatEditText7.perform(closeSoftKeyboard());
-
-        pressBack();
+        // pressBack();
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.registerBtn), withText("Create"),
+                allOf(withId(R.id.loginBtn), withText("Login"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.fragment_container),
                                         0),
-                                8),
+                                6),
                         isDisplayed()));
         materialButton2.perform(click());
 
+        // Test if the displayed account information is accurate
         ViewInteraction actionMenuItemView = onView(
                 allOf(withId(R.id.account), withContentDescription("Account Info"),
                         childAtPosition(
@@ -157,6 +109,7 @@ public class MainUITest {
                         isDisplayed()));
         textView2.check(matches(withText("Sam Baker")));
 
+        // Test navigating to the Update Account Info page
         ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.updateAccount), withText("Update Account Info"),
                         childAtPosition(
@@ -167,76 +120,7 @@ public class MainUITest {
                         isDisplayed()));
         materialButton3.perform(click());
 
-        ViewInteraction appCompatEditText8 = onView(
-                allOf(withId(R.id.updatedEmail),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.fragment_container),
-                                        0),
-                                5),
-                        isDisplayed()));
-        appCompatEditText8.perform(replaceText("new@email.com"), closeSoftKeyboard());
-
-        ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.updateEmailBtn), withText("Update Email"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.fragment_container),
-                                        0),
-                                6),
-                        isDisplayed()));
-        materialButton4.perform(click());
-
-        ViewInteraction appCompatEditText9 = onView(
-                allOf(withId(R.id.updatedName),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.fragment_container),
-                                        0),
-                                10),
-                        isDisplayed()));
-        appCompatEditText9.perform(replaceText("New Name"), closeSoftKeyboard());
-
-        pressBack();
-
-        ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.updateNameBtn), withText("Update Name"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.fragment_container),
-                                        0),
-                                11),
-                        isDisplayed()));
-        materialButton5.perform(click());
-
-        ViewInteraction actionMenuItemView2 = onView(
-                allOf(withId(R.id.account), withContentDescription("Account Info"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.toolbar),
-                                        1),
-                                0),
-                        isDisplayed()));
-        actionMenuItemView2.perform(click());
-
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.userEmail), withText("new@email.com"),
-                        withParent(withParent(withId(R.id.fragment_container))),
-                        isDisplayed()));
-        textView3.check(matches(withText("new@email.com")));
-
-        ViewInteraction textView4 = onView(
-                allOf(withId(R.id.userName), withText("New Name"),
-                        withParent(withParent(withId(R.id.fragment_container))),
-                        isDisplayed()));
-        textView4.check(matches(withText("New Name")));
-
-        ViewInteraction textView5 = onView(
-                allOf(withId(R.id.userName), withText("New Name"),
-                        withParent(withParent(withId(R.id.fragment_container))),
-                        isDisplayed()));
-        textView5.check(matches(withText("New Name")));
-
+        // Test navigating to the About page
         ViewInteraction actionMenuItemView3 = onView(
                 allOf(withId(R.id.about), withContentDescription("About/Settings"),
                         childAtPosition(
@@ -247,6 +131,7 @@ public class MainUITest {
                         isDisplayed()));
         actionMenuItemView3.perform(click());
 
+        // Test navigating to the Watch Later page
         ViewInteraction overflowMenuButton = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -267,6 +152,7 @@ public class MainUITest {
                         isDisplayed()));
         materialTextView.perform(click());
 
+        // Test navigating to the Previously Watched page
         ViewInteraction overflowMenuButton2 = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -287,6 +173,7 @@ public class MainUITest {
                         isDisplayed()));
         materialTextView2.perform(click());
 
+        // Navigate back to the Home/Sing out page
         ViewInteraction overflowMenuButton3 = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -307,6 +194,7 @@ public class MainUITest {
                         isDisplayed()));
         materialTextView3.perform(click());
 
+        // Test generating movies (simple default query)
         ViewInteraction materialButton6 = onView(
                 allOf(withId(R.id.findMoviePage), withText("Find Movie(s)"),
                         childAtPosition(
@@ -338,128 +226,7 @@ public class MainUITest {
                         isDisplayed()));
         materialButton8.perform(click());
 
-        ViewInteraction materialButton9 = onView(
-                allOf(withId(R.id.addWatchLaterBtn), withText("Watch Later List"),
-                        childAtPosition(
-                                allOf(withId(R.id.addListLayout),
-                                        childAtPosition(
-                                                withId(R.id.extraInfo),
-                                                3)),
-                                2),
-                        isDisplayed()));
-        materialButton9.perform(click());
-
-        ViewInteraction materialButton10 = onView(
-                allOf(withId(R.id.addPrevWatchedBtn), withText("Previously Watched List"),
-                        childAtPosition(
-                                allOf(withId(R.id.addListLayout),
-                                        childAtPosition(
-                                                withId(R.id.extraInfo),
-                                                3)),
-                                1),
-                        isDisplayed()));
-        materialButton10.perform(click());
-
-        pressBack();
-
-        ViewInteraction materialButton11 = onView(
-                allOf(withId(R.id.expandButton), withText("Show More Info"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.card),
-                                        0),
-                                2),
-                        isDisplayed()));
-        materialButton11.perform(click());
-
-        ViewInteraction materialButton12 = onView(
-                allOf(withId(R.id.addPrevWatchedBtn), withText("Previously Watched List"),
-                        childAtPosition(
-                                allOf(withId(R.id.addListLayout),
-                                        childAtPosition(
-                                                withId(R.id.extraInfo),
-                                                3)),
-                                1),
-                        isDisplayed()));
-        materialButton12.perform(click());
-
-        ViewInteraction materialButton13 = onView(
-                allOf(withId(R.id.addWatchLaterBtn), withText("Watch Later List"),
-                        childAtPosition(
-                                allOf(withId(R.id.addListLayout),
-                                        childAtPosition(
-                                                withId(R.id.extraInfo),
-                                                3)),
-                                2),
-                        isDisplayed()));
-        materialButton13.perform(click());
-
-        ViewInteraction overflowMenuButton4 = onView(
-                allOf(withContentDescription("More options"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.toolbar),
-                                        1),
-                                2),
-                        isDisplayed()));
-        overflowMenuButton4.perform(click());
-
-        ViewInteraction materialTextView4 = onView(
-                allOf(withId(R.id.title), withText("Watch Later"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        materialTextView4.perform(click());
-
-        ViewInteraction linearLayoutCompat = onView(
-                allOf(withParent(allOf(withId(R.id.postersRecyclerView),
-                        withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        linearLayoutCompat.check(matches(isDisplayed()));
-
-        ViewInteraction linearLayoutCompat2 = onView(
-                allOf(withParent(allOf(withId(R.id.postersRecyclerView),
-                        withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        linearLayoutCompat2.check(matches(isDisplayed()));
-
-        ViewInteraction overflowMenuButton5 = onView(
-                allOf(withContentDescription("More options"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.toolbar),
-                                        1),
-                                2),
-                        isDisplayed()));
-        overflowMenuButton5.perform(click());
-
-        ViewInteraction materialTextView5 = onView(
-                allOf(withId(R.id.title), withText("Previously Watched"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        materialTextView5.perform(click());
-
-        ViewInteraction linearLayoutCompat3 = onView(
-                allOf(withParent(allOf(withId(R.id.postersRecyclerView),
-                        withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        linearLayoutCompat3.check(matches(isDisplayed()));
-
-        ViewInteraction linearLayoutCompat4 = onView(
-                allOf(withParent(allOf(withId(R.id.postersRecyclerView),
-                        withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        linearLayoutCompat4.check(matches(isDisplayed()));
-
-        pressBack();
-
+        // Test signing out of the Account
         ViewInteraction overflowMenuButton6 = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -489,60 +256,11 @@ public class MainUITest {
                                 5),
                         isDisplayed()));
         materialButton14.perform(click());
+    }
 
-        ViewInteraction materialButton15 = onView(
-                allOf(withId(R.id.loginPage), withText("Login"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                5),
-                        isDisplayed()));
-        materialButton15.perform(click());
-
-        ViewInteraction appCompatEditText10 = onView(
-                allOf(withId(R.id.email),
-                        childAtPosition(
-                                allOf(withId(R.id.textView),
-                                        childAtPosition(
-                                                withId(R.id.fragment_container),
-                                                0)),
-                                2),
-                        isDisplayed()));
-        appCompatEditText10.perform(replaceText("new@email.com"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText11 = onView(
-                allOf(withId(R.id.password),
-                        childAtPosition(
-                                allOf(withId(R.id.textView),
-                                        childAtPosition(
-                                                withId(R.id.fragment_container),
-                                                0)),
-                                3),
-                        isDisplayed()));
-        appCompatEditText11.perform(replaceText("123456"), closeSoftKeyboard());
-
-        ViewInteraction materialButton16 = onView(
-                allOf(withId(R.id.loginBtn), withText("Login"),
-                        childAtPosition(
-                                allOf(withId(R.id.textView),
-                                        childAtPosition(
-                                                withId(R.id.fragment_container),
-                                                0)),
-                                6),
-                        isDisplayed()));
-        materialButton16.perform(click());
-
-        ViewInteraction materialButton17 = onView(
-                allOf(withId(R.id.logoutBtn), withText("Sign Out"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                5),
-                        isDisplayed()));
-        materialButton17.perform(click());
-
+    @Test
+    public void mainUITestDeleteBtn() {
+        // Test navigating to the Register page
         ViewInteraction materialButton18 = onView(
                 allOf(withId(R.id.registerPage), withText("Create New Account"),
                         childAtPosition(
@@ -572,7 +290,7 @@ public class MainUITest {
                                                 0)),
                                 2),
                         isDisplayed()));
-        appCompatEditText12.perform(replaceText("new@email.com"), closeSoftKeyboard());
+        appCompatEditText12.perform(replaceText("baker@email.com"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText13 = onView(
                 allOf(withId(R.id.password),
@@ -606,6 +324,7 @@ public class MainUITest {
                         isDisplayed()));
         actionMenuItemView4.perform(click());
 
+        // Test deleting a user's account (without actually deleting it)
         ViewInteraction materialButton20 = onView(
                 allOf(withId(R.id.deleteAccount), withText("Delete Account"),
                         childAtPosition(
@@ -617,13 +336,43 @@ public class MainUITest {
         materialButton20.perform(click());
 
         ViewInteraction materialButton21 = onView(
-                allOf(withId(android.R.id.button1), withText("YES"),
+                allOf(withId(android.R.id.button2), withText("NO"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
-                                3)));
+                                2)));
         materialButton21.perform(scrollTo(), click());
+
+        ViewInteraction overflowMenuButton7 = onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar),
+                                        1),
+                                2),
+                        isDisplayed()));
+        overflowMenuButton7.perform(click());
+
+        ViewInteraction materialTextView8 = onView(
+                allOf(withId(R.id.title), withText("Home/Sign Out"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView8.perform(click());
+
+        ViewInteraction materialButton15 = onView(
+                allOf(withId(R.id.logoutBtn), withText("Sign Out"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                5),
+                        isDisplayed()));
+        materialButton15.perform(click());
     }
 
     private static Matcher<View> childAtPosition(

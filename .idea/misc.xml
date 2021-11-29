@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../Library/Android/sdk/platforms/android-31/data/res/layout-car/car_alert_dialog_button_bar.xml" value="0.10677083333333333" />
+        <entry key="../../../Library/Android/sdk/platforms/android-31/data/res/layout/alert_dialog.xml" value="0.1" />
+        <entry key="../../../Library/Android/sdk/platforms/android-31/data/res/layout/auto_complete_list.xml" value="0.14739583333333334" />
         <entry key="MovieFinder/app/src/main/res/drawable/button_enabled.xml" value="0.1171875" />
         <entry key="MovieFinder/app/src/main/res/drawable/button_enabled_disabled.xml" value="0.1171875" />
         <entry key="MovieFinder/app/src/main/res/drawable/ic_baseline_local_movies_24.xml" value="0.1171875" />
